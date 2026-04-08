@@ -39,7 +39,7 @@
   * [ZK Proof Architecture](self-pass/architecture/zk-proof-architecture.md)
   * [Verification in the IdentityVerificationHub](self-pass/architecture/verification-hub.md)
   * [OFAC & CSCA Auto-Updaters](self-pass/architecture/ofac-csca-auto-updaters.md)
-  * [Self Attestation Format](self-pass/architecture/self-attestation.md)
+  * [Verification Result](self-pass/architecture/self-attestation.md)
   * [Deployments](self-pass/architecture/deployments.md)
 
 ## Self Connect

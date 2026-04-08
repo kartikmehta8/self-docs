@@ -1,24 +1,89 @@
-# Self Attestation
+# Verification Result
 
-The `SelfAttestation` interface represents the structure of an attestation used in the Self system. It includes details about the credential subject, proof, and document signing certificate (DSC) proof. It has been designed according to W3C standards.
+The `VerificationResult` type is the response returned by `SelfBackendVerifier.verify()` from `@selfxyz/core`. It contains the verification status, disclosed identity attributes, and user context data.
 
-#### Parameters
+## VerificationResult
 
-| Parameter           | Type       | Description                                      |
-| ------------------- | ---------- | ------------------------------------------------ |
-| `@context`          | `string[]` | Context URLs for the attestation.                |
-| `type`              | `string[]` | Types of the attestation.                        |
-| `issuer`            | `string`   | The issuer of the attestation.                   |
-| `issuanceDate`      | `string`   | The date the attestation was issued.             |
-| `credentialSubject` | `object`   | Contains details about the user and application. |
-| `proof`             | `object`   | Contains attestation proof data for the verified document type. |
-| `dscProof`          | `object`   | Contains DSC proof details for verification.     |
-| `dsc`               | `object`   | Contains DSC details.                            |
+```typescript
+type VerificationResult = {
+  attestationId: AttestationId;
+  isValidDetails: {
+    isValid: boolean;
+    isMinimumAgeValid: boolean;
+    isOfacValid: boolean;
+  };
+  forbiddenCountriesList: string[];
+  discloseOutput: GenericDiscloseOutput;
+  userData: {
+    userIdentifier: string;
+    userDefinedData: string;
+  };
+};
+```
 
-### `OpenPassportDynamicAttestation`
+### Fields
 
-The `OpenPassportDynamicAttestation` class extends `OpenPassportAttestation` and provides methods to parse and retrieve specific attributes from the attestation.
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `attestationId` | `AttestationId` | Identifier for the attestation type (passport, national ID, etc.) |
+| `isValidDetails.isValid` | `boolean` | Whether the ZK proof verified successfully on-chain |
+| `isValidDetails.isMinimumAgeValid` | `boolean` | Whether the user meets the configured minimum age requirement |
+| `isValidDetails.isOfacValid` | `boolean` | Whether the user passed the OFAC sanctions check |
+| `forbiddenCountriesList` | `string[]` | Country codes unpacked from the proof's public signals |
+| `discloseOutput` | `GenericDiscloseOutput` | Disclosed identity attributes from the ZK circuit |
+| `userData.userIdentifier` | `string` | User identifier extracted from the verification context |
+| `userData.userDefinedData` | `string` | Application-defined data passed through the verification flow |
 
-#### Functions
+## GenericDiscloseOutput
 
-<table><thead><tr><th width="800">Function</th><th width="126">Parameters</th><th width="309">Description</th><th>Output</th></tr></thead><tbody><tr><td><code>getUserId</code></td><td>None</td><td>Retrieves the user ID from the parsed public signals.</td><td><code>string</code></td></tr><tr><td><code>getNullifier</code></td><td>None</td><td>Retrieves the nullifier from the parsed public signals.</td><td><code>string</code></td></tr><tr><td><code>getCommitment</code></td><td>None</td><td>Retrieves the commitment from the parsed public signals.</td><td><code>string</code></td></tr><tr><td><code>getNationality</code></td><td>None</td><td>Retrieves the nationality from the unpacked reveal data.</td><td><code>string</code></td></tr><tr><td><code>getCSCAMerkleRoot</code></td><td>None</td><td>Retrieves the CSCAMerkleRoot from the DSC proof public signals.</td><td><code>string</code></td></tr></tbody></table>
+The disclosed identity attributes requested during verification. Only fields that were requested in the disclosure configuration will contain meaningful values.
+
+```typescript
+type GenericDiscloseOutput = {
+  nullifier: string;
+  forbiddenCountriesListPacked: string[];
+  issuingState: string;
+  name: string;
+  idNumber: string;
+  nationality: string;
+  dateOfBirth: string;
+  gender: string;
+  expiryDate: string;
+  minimumAge: string;
+  ofac: boolean[];
+};
+```
+
+### Fields
+
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `nullifier` | `string` | Unique nullifier derived from the proof (prevents double-use) |
+| `forbiddenCountriesListPacked` | `string[]` | Packed representation of forbidden countries from the circuit |
+| `issuingState` | `string` | Three-letter code of the document's issuing country |
+| `name` | `string` | Full name from the identity document |
+| `idNumber` | `string` | Document number |
+| `nationality` | `string` | Three-letter nationality code |
+| `dateOfBirth` | `string` | Date of birth |
+| `gender` | `string` | Gender as recorded on the document |
+| `expiryDate` | `string` | Document expiry date |
+| `minimumAge` | `string` | The verified minimum age value |
+| `ofac` | `boolean[]` | OFAC check results |
+
+## VerificationConfig
+
+The configuration passed to `SelfBackendVerifier` to specify what checks to perform.
+
+```typescript
+type VerificationConfig = {
+  minimumAge?: number;
+  excludedCountries?: Country3LetterCode[];
+  ofac?: boolean;
+};
+```
+
+| Field | Type | Description |
+| ----- | ---- | ----------- |
+| `minimumAge` | `number` (optional) | Minimum age requirement. Verification fails if the user is younger. |
+| `excludedCountries` | `Country3LetterCode[]` (optional) | List of three-letter country codes to exclude |
+| `ofac` | `boolean` (optional) | Whether to check the user against the OFAC sanctions list |
