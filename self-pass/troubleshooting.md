@@ -23,9 +23,9 @@ There is a mismatch of the scope value between the smart contract and the front 
 There is a mismatch between `endpoint` and `endpoint-type` in the `SelfAppBuilder` object.
 
 * If `endpointType` is `celo` , then `endpoint` value must be the contract address for a contract deployed on Celo Mainnet.
-* If `endpointType` is `celo-staging` , then `endpoint` value must be the contract address for a contract deployed on Celo Sepolia Testnet.
+* If `endpointType` is `staging_celo` , then `endpoint` value must be the contract address for a contract deployed on Celo Sepolia Testnet.
 * If `endpointType` is `https` , then `endpoint` value must be a http endpoint.
-* If `endpointType` is `https-staging` , then `endpoint` value must be a http endpoint. `https-staging` is to be used for verifying mock documents.
+* If `endpointType` is `staging_https` , then `endpoint` value must be a http endpoint. `staging_https` is to be used for verifying mock documents.
 
 ### -32000, "message" : "execution reverted"
 

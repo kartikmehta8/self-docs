@@ -252,7 +252,7 @@ contract ProofOfHuman is SelfVerificationRoot {
      */
     constructor(
         address identityVerificationHubV2Address, // Hub V2 address — see Deployed Contracts page
-        uint256 scopeSeed,                        // Unique app identifier (≤31 ASCII bytes), hashed into scope
+        string memory scopeSeed,                  // Unique app identifier (≤31 ASCII bytes), hashed into scope
         SelfUtils.UnformattedVerificationConfigV2 memory _verificationConfig // What to verify (age, countries, OFAC)
     ) SelfVerificationRoot(identityVerificationHubV2Address, scopeSeed) {
         verificationConfig = 
