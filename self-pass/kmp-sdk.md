@@ -137,6 +137,8 @@ struct iOSApp: App {
 
 KMP compiles Kotlin `object` singletons to Objective-C classes — Swift accesses them via `.shared`.
 
+Once providers are registered, call `SelfSdk.configure()` and `sdk.launch()` from your shared `commonMain` code — no iOS-specific launch code is needed. The Quick Start example above works as-is on both platforms.
+
 `SelfSdkSwift` is a convenience, not a requirement. You can provide your own classes as long as they conform to the KMP protocols (`SecureStorageProvider`, `WebViewProvider`).
 
 {% endtab %}
@@ -161,7 +163,7 @@ SelfSdkConfig(
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `endpoint` | `"https://api.self.xyz"` | Self backend API endpoint |
-| `environment` | `PROD` | `PROD` or `STG` (staging uses test flows) |
+| `environment` | `PROD` | `SelfEnvironment.PROD` (real documents, mainnet) or `SelfEnvironment.STG` (mock documents, testnet). See the [quickstart environment guide](quickstart.md#choose-your-environment) for details. |
 | `version` | `2` | Protocol version for the verification flow |
 | `appName` | `null` | Display name shown in the verification UI |
 | `appEndpoint` | `null` | URL of the backend verifier that verifies the ZK proof |
