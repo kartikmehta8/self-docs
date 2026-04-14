@@ -28,6 +28,7 @@
     * [Minimal Setup](self-pass/mobile-sdk/examples/minimal-setup.md)
     * [Navigation Setup](self-pass/mobile-sdk/examples/navigation-setup.md)
     * [Demo Walkthrough](self-pass/mobile-sdk/examples/demo-walkthrough.md)
+* [KMP SDK (Alpha)](self-pass/kmp-sdk.md)
 * [Document Specifications](self-pass/document-specification/aadhaar.md)
   * [Aadhaar](self-pass/document-specification/aadhaar.md)
   * [KYC](self-pass/document-specification/kyc.md)
