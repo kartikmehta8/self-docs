@@ -22,6 +22,44 @@ You'll need to provide:
 
 The SDK currently supports Android and iOS. On iOS, you also need the `SelfSdkSwift` companion package or equivalent native provider implementations.
 
+## How It Works
+
+```mermaid
+sequenceDiagram
+    participant Host as Host App
+    participant SDK as Self SDK
+    participant UI as Self Verification UI
+    participant Self as Self Protocol
+
+    Note over Host,SDK: App setup
+    Host->>SDK: Configure `SelfSdkConfig`
+    Host->>SDK: Call `launch(request, callback)`
+
+    Note over SDK,UI: Verification session
+    SDK->>UI: Launch hosted verification flow
+    activate UI
+    UI->>UI: Complete KYC flow
+    UI->>UI: Delete KYC documents
+
+    Note over UI,Self: Proof lifecycle
+    UI->>Self: Register identity proof
+    UI->>Self: Disclose & verify proof
+    Self-->>UI: Return verification outcome
+
+    Note over UI,Host: Completion
+    alt Verification succeeds
+        UI-->>SDK: Success
+        SDK-->>Host: `onSuccess()`
+    else Verification fails
+        UI-->>SDK: Failure
+        SDK-->>Host: `onFailure(error)`
+    else User cancels
+        UI-->>SDK: Cancelled
+        SDK-->>Host: `onCancelled()`
+    end
+    deactivate UI
+```
+
 ## Quick Start
 
 All calling code lives in your `commonMain` source set:
