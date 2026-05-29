@@ -30,6 +30,12 @@ On-chain proof-of-human identity for AI agents. Each agent receives a soulbound 
 
 [Get started with Self Agent ID](agent-id/overview.md)
 
+### Self Enterprise
+
+The managed plane for zero-knowledge identity verification. Configure flows in a dashboard, call a single SDK, and receive signed webhook events when users verify — without standing up smart contracts, hosting verifier infrastructure, or storing personal data yourself. Includes hosted verification pages, audit logs, and usage-based billing.
+
+[Get started with Self Enterprise](self-enterprise/README.md)
+
 ## Use Cases
 
 * **Sybil resistance** — Prove users are unique humans without collecting personal data
