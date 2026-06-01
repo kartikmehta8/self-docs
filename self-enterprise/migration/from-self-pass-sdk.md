@@ -5,7 +5,7 @@ description: Move from the open-source self-pass SDK to the managed Enterprise p
 
 # From the open-source SDK
 
-If you've integrated the open-source [Self Pass](../../self-pass/README.md) frontend SDK (`@selfxyz/qrcode`) and backend verifier (`@selfxyz/core`), here's how it maps to Self Enterprise.
+If you've integrated the open-source Self Pass frontend SDK (`@selfxyz/qrcode`) and backend verifier (`@selfxyz/core`), here's how it maps to Self Enterprise.
 
 ## Why migrate
 

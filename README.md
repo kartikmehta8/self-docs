@@ -29,17 +29,12 @@ The managed platform. You set up a verification flow in the dashboard, ask Self 
 * **Reusable KYC**: verify a user once, trust the attestation later.
 * **Marketplace trust**: verify both sides of a trade without holding either party's PII.
 
-## Open source & protocol
+## More from Self
 
-Self Enterprise runs on top of an open protocol. If you'd rather self-host the verifier, deploy your own contracts, or build on the lower layers directly, those products are open source and documented under **Open source & protocol** in the sidebar:
+Self builds more than verification. These products have their own sections in the sidebar:
 
-* **Self Pass**: the underlying identity protocol. Frontend and backend SDKs, smart contracts, and the zero-knowledge proof system. (Self Enterprise is the managed version of this.)
-* **Self Connect**: map off-chain identifiers (phone, email, social handles) to on-chain addresses.
-* **Self Agent ID**: on-chain proof-of-human identity for AI agents (ERC-8004).
-
-{% hint style="info" %}
-These SDKs are being superseded by Self Enterprise for most use cases. They remain fully supported and open source, start with Enterprise unless you specifically need to self-host.
-{% endhint %}
+* **[Self Connect](self-connect/introduction-and-overview.md)**: map off-chain identifiers (phone, email, social handles) to on-chain addresses.
+* **[Self Agent ID](agent-id/overview.md)**: on-chain proof-of-human identity for AI agents (ERC-8004).
 
 ## Resources
 

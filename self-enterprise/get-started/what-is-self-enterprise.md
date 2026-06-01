@@ -6,7 +6,7 @@ The integration is small: one `sessions.create(...)` call, a hosted page the use
 
 ## What it replaces
 
-Self Enterprise is the managed offering on top of the open [Self protocol](../../open-source/README.md). It bundles the parts you'd otherwise build and operate yourself:
+Self Enterprise is the managed offering on top of the open Self protocol. It bundles the parts you'd otherwise build and operate yourself:
 
 | Concern | Open-source Self | Self Enterprise |
 | --- | --- | --- |
@@ -16,7 +16,7 @@ Self Enterprise is the managed offering on top of the open [Self protocol](../..
 | Store the result | Build your own store + audit log | Optional decentralized storage; full audit log in the dashboard |
 | Bill the work | n/a | Usage-based, metered automatically |
 
-If your team wants a fast path from "we want ZK identity verification" to a working integration, Enterprise is it. If you'd rather own the full stack, the [open-source SDKs](../../open-source/README.md) are still the right tool.
+If your team wants a fast path from "we want ZK identity verification" to a working integration, Enterprise is it.
 
 ## Who is it for?
 
