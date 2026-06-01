@@ -2,21 +2,7 @@
 
 The dashboard at [dashboard.self.xyz](https://dashboard.self.xyz) is where you configure products, manage keys, watch traffic, and pay for what you use. This page is a map.
 
-> 📸 _**Screenshot:** Dashboard home view, with the org switcher visible in the top-left and the main nav (Home / Products / Settings)._
-
-## Layout
-
-```
-┌───────────────────────────────────────────────────────────┐
-│ [Org switcher ▾]            Home  Products  Settings      │
-├───────────────────────────────────────────────────────────┤
-│                                                           │
-│                       (selected view)                     │
-│                                                           │
-└───────────────────────────────────────────────────────────┘
-```
-
-The **org switcher** in the top-left scopes everything below it. If you belong to multiple orgs, switch here.
+> 📸 _**Screenshot:** Dashboard home view showing the main nav (Home / Products / Settings)._
 
 ## Top-level sections
 
@@ -48,7 +34,7 @@ Org-wide configuration:
 
 **Settings → Account** controls org-level identity:
 
-* **Organization name**: what your teammates see in the switcher.
+* **Organization name**: what your teammates see for this org.
 * **Deactivate organization**: soft-deletes the org. Flows stop accepting sessions, API keys are revoked, and webhook deliveries stop. Audit records and invoices are preserved.
 
 > Deactivation is reversible by Self support but not self-serve. Don't deactivate to "pause". Use API key rotation or disable individual flows instead.

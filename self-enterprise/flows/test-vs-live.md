@@ -12,11 +12,11 @@ The environments don't share data, flows, sessions, or webhook subscriptions.
 ## How they're separated
 
 * **API keys** carry the environment in their prefix: `sk_test_...` vs. `sk_live_...`. A test key can only create sessions against a test flow; a live key only against a live flow.
-* **Flows** are scoped to one environment. The dashboard's Products view filters by current environment.
+* **Flows** are scoped to one environment.
 * **Webhook subscriptions** are per-environment. Set up `https://staging.example.com/webhooks/self` for test and `https://prod.example.com/webhooks/self` for live, with separate secrets.
 * **Billing** never applies in test. Credit balance is for live only.
 
-The current environment is shown in the dashboard's top bar with a colored badge. Switch with the toggle in the top-right.
+The environment is decided by the key you use: a `sk_test_…` key runs against test, a `sk_live_…` key against live.
 
 ## Mock passports
 
