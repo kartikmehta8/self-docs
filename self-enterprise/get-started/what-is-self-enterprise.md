@@ -8,13 +8,12 @@ The integration is small: one `sessions.create(...)` call, a hosted page the use
 
 Self Enterprise is the managed offering on top of the open Self protocol. It bundles the parts you'd otherwise build and operate yourself:
 
-| Concern | Open-source Self | Self Enterprise |
+| Concern | Self SDK (Legacy) | Self Enterprise |
 | --- | --- | --- |
 | Configure a verification flow | Encode disclosures in your contract / backend | Configure in the dashboard, publish a version |
 | Issue credentials to users | Run your own backend + hosted page | Hand the user a `verificationUrl` from the API |
 | Verify a proof | Run the verifier yourself (or on-chain) | We verify on the hot path; you get a signed webhook |
-| Store the result | Build your own store + audit log | Optional decentralized storage; full audit log in the dashboard |
-| Bill the work | n/a | Usage-based, metered automatically |
+| Store the result | Build your own store + audit log | Full audit log in the dashboard |
 
 If your team wants a fast path from "we want ZK identity verification" to a working integration, Enterprise is it.
 
@@ -28,22 +27,28 @@ If your team wants a fast path from "we want ZK identity verification" to a work
 ## How it fits together
 
 ```
-┌──────────────┐    sessions.create()    ┌──────────────┐
-│ Your backend │ ─────────────────────▶  │  Self        │
-└──────────────┘                          └──────┬───────┘
-       ▲                                          │
-       │ webhook (verification.completed)         │ hosted
-       │                                          ▼
-┌──────────────┐                          ┌──────────────┐
-│ Your backend │  ◀──────────────────────  │  Self app   │
-└──────────────┘   signed webhook         │  (user)      │
-                                          └──────────────┘
+┌──────────────┐  2. sessions.create()  ┌─────────────────┐
+│ Your backend │ ─────────────────────▶ │ Self Enterprise │ ◀── 1. configure a flow
+│              │ ◀───────────────────── │   (dashboard)   │     in the dashboard
+└──────────────┘  5. signed webhook     └────────┬────────┘
+                  verification.completed          │ 3. serve hosted page
+                                                  ▼
+                                          ┌───────────────┐
+                                          │  Hosted page  │
+                                          │  (QR / link)  │
+                                          └───────┬───────┘
+                                                  │ 4. scan QR, verify in app
+                                                  ▼
+                                          ┌───────────────┐
+                                          │  Self mobile  │
+                                          │  app (user)   │
+                                          └───────────────┘
 ```
 
-1. **You configure a flow** in the dashboard (what to verify: age, nationality, sanctions, etc.).
+1. **You configure a flow** on the Self dashboard, picking one of three products: **Pre KYC**, **Age Verification**, or **Proof of Human**.
 2. **You call `sessions.create(...)`** via the Enterprise SDK when a user needs to verify. We return a `verificationUrl`.
-3. **Your user opens the URL** in their Self app and produces a ZK proof of the requested attributes.
-4. **We verify the proof** on the hot path and fire a webhook to your backend.
-5. **You read the verified attributes** from the webhook and proceed.
+3. **You send the user to that URL.** Self serves a hosted page with a QR code (or a deeplink button on mobile).
+4. **The user verifies in the Self mobile app**, scanning the QR or tapping the link. The app produces a ZK proof of the requested attributes and submits it to Self.
+5. **We verify the proof** and fire a signed webhook to your backend. You read the verified attributes and proceed.
 
 Next: [Quickstart](quickstart.md) walks the end-to-end integration in ten minutes.
