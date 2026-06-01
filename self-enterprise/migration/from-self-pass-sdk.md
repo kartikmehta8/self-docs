@@ -20,14 +20,14 @@ The open-source SDK requires you to:
 Enterprise replaces all of that with a managed service. Your frontend integration stays largely identical; the backend collapses.
 
 {% hint style="info" %}
-If you're happy running your own verifier and don't need SLAs, billing, or a dashboard, stay on the open-source SDK — it's fully supported. Otherwise, read on.
+If you're happy running your own verifier and don't need SLAs, billing, or a dashboard, stay on the open-source SDK, it's fully supported. Otherwise, read on.
 {% endhint %}
 
 ## Concept mapping
 
 | Open-source self-pass | Self Enterprise |
 | --- | --- |
-| `SelfAppBuilder` (frontend) | Same idea, but the `endpoint` becomes our hosted verifier — you don't host it. |
+| `SelfAppBuilder` (frontend) | Same idea, but the `endpoint` becomes our hosted verifier, you don't host it. |
 | `SelfBackendVerifier` | Replaced by our managed verifier. You don't run this anymore. |
 | `ConfigStore` (your `IConfigStorage` impl) | Replaced by the dashboard's [flow configuration](../dashboard/configure-a-product.md). |
 | Predicate config object | A **flow** in the dashboard. `flowId` replaces inline config. |
@@ -94,7 +94,7 @@ app.post('/start-verification', async (req, res) => {
   res.json({ verificationUrl: session.verificationUrl });
 });
 
-// You no longer need a /verify endpoint — we deliver the result via webhook.
+// You no longer need a /verify endpoint, we deliver the result via webhook.
 ```
 
 ### 3. Replace inline verification with a webhook handler
@@ -120,7 +120,7 @@ app.post('/webhooks/self', express.raw({ type: 'application/json' }), (req, res)
 
 ### 4. Update your frontend QR component (if you have one)
 
-If you rendered your own QR via `@selfxyz/qrcode`, the simplest path is to **redirect to `session.verificationUrl`** — our hosted page renders the QR and handles deeplinks.
+If you rendered your own QR via `@selfxyz/qrcode`, the simplest path is to **redirect to `session.verificationUrl`**, our hosted page renders the QR and handles deeplinks.
 
 If you'd rather keep rendering inline: call `self.sessions.create(...)` on your backend and pass `session.verificationUrl` to your QR component as the data. The user-facing UX is unchanged.
 
@@ -128,13 +128,13 @@ If you'd rather keep rendering inline: call `self.sessions.create(...)` on your 
 
 * Remove `@selfxyz/core` (and `@selfxyz/qrcode`, unless you're still rendering the QR yourself).
 * Remove your `ConfigStore` implementation.
-* Remove your `/verify` route — Enterprise delivers via webhook.
+* Remove your `/verify` route, Enterprise delivers via webhook.
 * Remove any code that loaded verifier circuit files at boot.
 
 ## What stays the same
 
 * The **Self mobile app** is unchanged for your users.
-* The **disclosures** are the same — age, nationality, OFAC, etc. See [Disclosures](../flows/disclosures.md).
+* The **disclosures** are the same, age, nationality, OFAC, etc. See [Disclosures](../flows/disclosures.md).
 * The **proof system** is the same under the hood.
 * Your **frontend** can keep rendering its own QR, just pointed at our session URL.
 
@@ -144,12 +144,12 @@ If you'd rather keep rendering inline: call `self.sessions.create(...)` on your 
 * [Audit log](../dashboard/activity-log.md) out of the box.
 * [Webhook delivery](../webhooks/overview.md) with retries and replay.
 * A [dashboard](../dashboard/overview.md) to change rules without a redeploy.
-* [Per-flow versioning](../flows/anatomy.md#versions) — audit exactly what a user was verified against last March.
+* [Per-flow versioning](../flows/anatomy.md#versions), audit exactly what a user was verified against last March.
 
 ## What's different
 
 * You pay per verification. See [Plans](../billing/plans.md).
-* Your service no longer holds the raw proof — we verify it and hand you the attributes. (You can still read the raw proof from the `verification.completed` event if you truly need it.)
+* Your service no longer holds the raw proof, we verify it and hand you the attributes. (You can still read the raw proof from the `verification.completed` event if you truly need it.)
 
 ## Rolling out safely
 

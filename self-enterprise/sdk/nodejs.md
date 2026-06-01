@@ -1,6 +1,6 @@
 # Node.js / TypeScript SDK
 
-`@selfxyz/enterprise-sdk` is the official Node/TS client for the Enterprise API. It wraps session creation, retrieval, and webhook signature verification with typed payloads. Under the hood it calls the [REST API](../api-reference/overview.md) — drop down to that if you're on a language without an SDK yet.
+`@selfxyz/enterprise-sdk` is the official Node/TS client for the Enterprise API. It wraps session creation, retrieval, and webhook signature verification with typed payloads. Under the hood it calls the [REST API](../api-reference/overview.md), drop down to that if you're on a language without an SDK yet.
 
 ## Install
 

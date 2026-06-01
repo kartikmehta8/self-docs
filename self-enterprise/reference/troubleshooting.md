@@ -54,9 +54,9 @@ The `flowId` (or session ID) is wrong, points at a draft (not yet published), or
 * Open the flow in the dashboard. If you don't see a "Published" badge, click **Publish version** (otherwise you'll get `409 conflict`).
 * If the flow was deleted, recreate it; the ID is gone.
 
-### `402` — insufficient credits
+### `402`, insufficient credits
 
-Your org's credit balance is too low to cover this session's cost, and your [credit gate](../billing/credits-and-usage.md#insufficient-credits) is set to `hard`. (The error envelope carries `code: "unauthenticated"` with HTTP `402` — branch on the status, not the code.)
+Your org's credit balance is too low to cover this session's cost, and your [credit gate](../billing/credits-and-usage.md#insufficient-credits) is set to `hard`. (The error envelope carries `code: "unauthenticated"` with HTTP `402`, branch on the status, not the code.)
 
 * Check **Settings → Billing → Credit balance**.
 * If you're on Free, the monthly grant resets at the start of the cycle. If you're on Starter/Enterprise, configure overage, or switch the credit gate to `soft`.

@@ -26,7 +26,7 @@ The landing surface. Shows recent activity across your products, quick links to 
 
 ### Products
 
-Each product (today: Self Pass) gets its own area:
+Each product (Pre KYC, Age Verification, Proof of Human) gets its own area:
 
 * **Landing**: list of your flows for this product, plus a button to create a new one.
 * **Editor**: per-flow configuration, split into tabs:
@@ -55,4 +55,4 @@ Org-wide configuration:
 
 ## Permissions
 
-Members have one of three roles — `owner`, `admin`, or `member` — which control who can manage keys, webhooks, and billing. See [People → Roles](people.md#roles). For machine access, use [API keys](api-keys.md) rather than a member's login.
+Members have one of three roles, `owner`, `admin`, or `member`, which control who can manage keys, webhooks, and billing. See [People → Roles](people.md#roles). For machine access, use [API keys](api-keys.md) rather than a member's login.

@@ -21,7 +21,7 @@ Every member has one of three roles:
 | --- | --- |
 | **`owner`** | Everything, including billing actions (change plan, toggle the credit gate) and managing other owners. |
 | **`admin`** | Manage flows, API keys, webhook endpoints, and invite members. Cannot perform owner-only billing actions. |
-| **`member`** | Read access — view flows, the activity log, usage, and webhook delivery history. Cannot create or revoke keys, manage webhooks, or invite people. |
+| **`member`** | Read access, view flows, the activity log, usage, and webhook delivery history. Cannot create or revoke keys, manage webhooks, or invite people. |
 
 Only `owner` and `admin` can issue/revoke API keys and manage webhook endpoints. Billing's credit-gate toggle is `owner`-only.
 

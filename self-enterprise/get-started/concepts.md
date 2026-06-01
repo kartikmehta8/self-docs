@@ -10,15 +10,19 @@ Created on sign-up. Renamed and deactivated under **Settings → Account**.
 
 ## Product
 
-A product is a verification capability, currently **Self Pass** (passport / national ID / KYC). Each product has its own configuration model and its own per-verification cost.
+A product is the kind of verification you're running. There are three, and each one decides what the user has to prove and which configuration options you get:
 
-You configure products at the org level. A single org can run multiple products in parallel.
+* **Pre KYC**: a pre-screening check before full KYC. Confirms the user holds a genuine government document, optionally meets an age floor, comes from an allowed country, and clears the OFAC sanctions list. Outcome: approved or rejected.
+* **Age Verification**: proves the user meets an age threshold (say 18 or 21) without revealing their birth date. Outcome: approved or rejected.
+* **Proof of Human**: proves the user is a unique, real human backed by a government document, for sybil resistance. No age or country rules. Outcome: verified or failed.
+
+You pick the product when you create a flow. Each product has its own per-verification cost; see [Plans](../billing/plans.md).
 
 ## Flow
 
-A flow is a published, versioned configuration for a product. It pins:
+A flow is a published, versioned configuration of one product. It pins:
 
-* **Rules**: the predicates the user's proof must satisfy (`age >= 18`, `nationality in [...]`, etc.).
+* **Rules**: what the user must prove, drawn from the chosen product's options (an age floor, country allow or deny lists, OFAC).
 * **Documents**: which credential types are acceptable.
 * **Settings**: success URL, failure URL, branding.
 
@@ -36,10 +40,10 @@ It has a lifecycle:
 pending (created, awaiting the user) → valid | invalid | error | expired
 ```
 
-* `valid` — proof verified and every predicate passed.
-* `invalid` — proof verified but a predicate failed (e.g. underage).
-* `error` — a technical failure (unsupported document, malformed proof).
-* `expired` — the user never finished before `expiresAt`.
+* `valid`, proof verified and every predicate passed.
+* `invalid`, proof verified but a predicate failed (e.g. underage).
+* `error`, a technical failure (unsupported document, malformed proof).
+* `expired`, the user never finished before `expiresAt`.
 
 When a session reaches any terminal status, a `verification` record is finalized in your audit log with the proof attributes the user disclosed, and we fire the `verification.completed` webhook (its `status` field carries the outcome above).
 

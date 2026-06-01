@@ -11,13 +11,13 @@ For evaluation, prototypes, and side projects.
 * **Included credits**: a monthly allotment, enough to integrate end-to-end and run small-volume traffic.
 * **Rate limits**: modest; sufficient for a single backend.
 * **Support**: community (Discord, GitHub issues).
-* **Features**: full Self Pass capability, test + live environments, webhooks, audit log.
+* **Features**: all three products (Pre KYC, Age Verification, Proof of Human), test and live environments, webhooks, audit log.
 
 Free is meant to be a real on-ramp, not a marketing tease. If you outgrow it, you'll see the next-tier prompts in-product.
 
 ## Starter
 
-For production workloads with modest volume. This is the self-serve paid tier — you subscribe directly from the dashboard.
+For production workloads with modest volume. This is the self-serve paid tier, you subscribe directly from the dashboard.
 
 * **Billing**: a fixed subscription fee, billed **monthly or annually** (you choose at checkout).
 * **Included credits**: a much larger pool than Free, refreshed each cycle; spillover billed per-credit.

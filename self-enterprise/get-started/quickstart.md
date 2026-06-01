@@ -12,17 +12,21 @@ End-to-end: from sign-up to a verified user, in about ten minutes.
 
 After sign-up you'll be prompted to create an organization. An org owns flows, API keys, webhook subscriptions, and the billing relationship. You can invite teammates from **Settings → People** once it's set up.
 
-## 2. Configure a Self Pass flow
+## 2. Create a flow
 
-From the dashboard home, choose **Self Pass** and click **Create flow**.
+From the dashboard home, pick a product and click **Create configuration**. There are three products:
 
-A flow has three parts:
+* **Pre KYC**: document plus optional age, country rules, and OFAC.
+* **Age Verification**: an age threshold (for example 18 or 21).
+* **Proof of Human**: unique humanity for sybil resistance, no extra rules.
 
-* **Rules**: the disclosures you want (e.g. `age >= 18`, `nationality not in ['US', 'CN']`, `not on OFAC list`).
+For this walkthrough, **Age Verification** is the quickest. A flow has three parts:
+
+* **Rules**: what the user must prove. For Age Verification, a minimum age.
 * **Documents**: which credentials are acceptable (passport, Aadhaar, KYC attestation).
-* **Settings**: things like success/failure redirect URLs.
+* **Settings**: success and failure redirect URLs, display name, branding.
 
-Fill them in, then click **Publish version**. Your flow now has a published `flowId`, copy it.
+Fill them in, then click **Publish version**. Your flow now has a published `flowId`. Copy it.
 
 > 📸 _**Screenshot:** Published flow card showing the `flowId` and a "Copy" button._
 

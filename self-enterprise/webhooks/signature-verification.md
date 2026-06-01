@@ -36,9 +36,9 @@ signature      = base64(HMAC-SHA256(secret_bytes, signed_payload))
 
 Where `<svix-id>`, `<svix-timestamp>`, and `<body>` come from the request:
 
-* `<svix-id>` — the `svix-id` HTTP header.
-* `<svix-timestamp>` — the `svix-timestamp` HTTP header (Unix seconds).
-* `<body>` — the raw request body (UTF-8 bytes, exactly as received).
+* `<svix-id>`, the `svix-id` HTTP header.
+* `<svix-timestamp>`, the `svix-timestamp` HTTP header (Unix seconds).
+* `<body>`, the raw request body (UTF-8 bytes, exactly as received).
 
 The `svix-signature` header may contain multiple comma-separated signatures (each prefixed with a version, e.g. `v1,<base64>`). Your computed signature matches if any one of them matches.
 

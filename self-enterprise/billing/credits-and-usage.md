@@ -20,13 +20,13 @@ Each product has a per-verification credit cost, baked in at session creation ti
 
 | Product | Credit cost (illustrative) |
 | --- | --- |
-| Self Pass, biometric passport | 10 |
-| Self Pass, Aadhaar | 5 |
-| Self Pass, KYC attestation | 12 |
+| Pre KYC | 1 |
+| Age Verification | 2 |
+| Proof of Human | 3 |
 
 (Concrete costs live in your dashboard. The numbers above are illustrative.)
 
-The cost is reserved against your credit balance the moment a session is created. Sessions that end `expired` or `error` are **not billed** — you only pay for verifications the user actually completed.
+The cost is reserved against your credit balance the moment a session is created. Sessions that end `expired` or `error` are **not billed**, you only pay for verifications the user actually completed.
 
 ## What counts as "consumed"
 
@@ -34,8 +34,8 @@ The cost is reserved against your credit balance the moment a session is created
 | --- | --- |
 | `valid` | Yes |
 | `invalid` (predicate failed) | Yes |
-| `error` (technical failure) | No — not billed |
-| `expired` (user never finished) | No — not billed |
+| `error` (technical failure) | No, not billed |
+| `expired` (user never finished) | No, not billed |
 
 You pay for verification work, not for sessions the user never got to.
 
@@ -55,7 +55,7 @@ Watch the balance in **Settings → Billing → Credit balance**. It auto-refill
 Each org has a **credit gate** with two modes (set under **Settings → Billing**):
 
 * **`hard`** (default): if your balance is too low to cover a session's cost, `sessions.create(...)` is rejected with HTTP `402` (the SDK throws `SelfApiError` with `status: 402`). The session is not created. The error `details` include `balance`, `required`, and `planTier`.
-* **`soft`**: sessions are still created when you're out of credits, so verification isn't interrupted — you reconcile the overage on your invoice. Use this when uninterrupted verification matters more than a hard spend cap.
+* **`soft`**: sessions are still created when you're out of credits, so verification isn't interrupted, you reconcile the overage on your invoice. Use this when uninterrupted verification matters more than a hard spend cap.
 
 To avoid this in production:
 
@@ -77,10 +77,10 @@ Test verifications never consume credits and never appear on invoices. They're n
 
 ### Sizing for a launch
 
-You expect 50,000 verifications in the first month, mostly biometric passport (cost 10 credits each):
+You expect 50,000 Age Verification checks in the first month (2 credits each):
 
-* Expected consumption: 50,000 × 10 = 500,000 credits.
-* If your plan includes 200,000, you'll need 300,000 in overage, verify your overage rate before launch.
+* Expected consumption: 50,000 × 2 = 100,000 credits.
+* If your plan includes 40,000, you'll need 60,000 in overage, so verify your overage rate before launch.
 
 ### Diagnosing a spike
 

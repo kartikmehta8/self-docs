@@ -20,11 +20,11 @@ Authenticated with an API key. Creates a session against the **currently publish
 | Field | Type | Required | Notes |
 | --- | --- | :---: | --- |
 | `flowId` | string (UUID) | ✅ | The flow to verify against. Must be published and belong to your org. |
-| `externalUuid` | string | ✅ | Your stable identifier for the user (1–128 chars). Echoed back on the session and every webhook. |
-| `expiresInSeconds` | integer | — | How long the session stays openable. `60`–`86400`. Default `3600` (1 hour). |
-| `metadata` | object | — | Arbitrary JSON you want attached to this session. Max 4 KB serialized. Echoed back on read. |
-| `successUrl` | string (URL) | — | Where the hosted page sends the user on success. Overrides the flow default. |
-| `failureUrl` | string (URL) | — | Where the hosted page sends the user on failure. Overrides the flow default. |
+| `externalUuid` | string | ✅ | Your stable identifier for the user (1 to 128 chars). Echoed back on the session and every webhook. |
+| `expiresInSeconds` | integer | No | How long the session stays openable. `60` to `86400`. Default `3600` (1 hour). |
+| `metadata` | object | No | Arbitrary JSON you want attached to this session. Max 4 KB serialized. Echoed back on read. |
+| `successUrl` | string (URL) | No | Where the hosted page sends the user on success. Overrides the flow default. |
+| `failureUrl` | string (URL) | No | Where the hosted page sends the user on failure. Overrides the flow default. |
 
 ```bash
 curl https://api.self.xyz/v1/sessions \
@@ -85,7 +85,7 @@ GET /v1/sessions/{id}
 Returns the current state of a session, including the result once it completes. Useful for reconciliation or when you'd rather poll than rely solely on webhooks.
 
 {% hint style="info" %}
-**Access control:** the session UUID itself is the access token (it carries ~122 bits of entropy), so this endpoint is reachable with just the ID — the SDK still sends your API key. Treat session IDs as secrets: don't expose them in public URLs or logs you wouldn't protect.
+**Access control:** the session UUID itself is the access token (it carries ~122 bits of entropy), so this endpoint is reachable with just the ID, the SDK still sends your API key. Treat session IDs as secrets: don't expose them in public URLs or logs you wouldn't protect.
 {% endhint %}
 
 ### Response `200`
@@ -117,7 +117,7 @@ Returns the current state of a session, including the result once it completes. 
 | `status` | enum | `pending` · `valid` · `invalid` · `error` · `expired`. See [statuses](#statuses). |
 | `completedAt` | string \| null | When verification finished. `null` while `pending`. |
 | `predicatesConfig` | object \| null | The rules this session was evaluated against (the pinned flow version's config). |
-| `proofAttributes` | object \| null | The disclosed results — predicate booleans and any explicit reveals. `null`/empty until completed with a non-error status. |
+| `proofAttributes` | object \| null | The disclosed results, predicate booleans and any explicit reveals. `null`/empty until completed with a non-error status. |
 | `storage` | object | Decentralized-storage state: `state` (`pending`/`committed`/`failed`), `uri`, `credentialId`. |
 
 ### Statuses
@@ -138,11 +138,11 @@ Returns the current state of a session, including the result once it completes. 
 
 ## Notes
 
-* **Webhooks are the recommended path** for learning a session finished — polling is lossy and slower at scale. See [Webhooks: overview](../webhooks/overview.md). Use `GET` for reconciliation, not as your primary signal.
+* **Webhooks are the recommended path** for learning a session finished, polling is lossy and slower at scale. See [Webhooks: overview](../webhooks/overview.md). Use `GET` for reconciliation, not as your primary signal.
 * **Credits** are reserved at creation against the session's per-product cost. Sessions that end `expired` or `error` are not billed. See [Credits and usage](../billing/credits-and-usage.md).
 
 ## Next
 
-* [Flow config](flow-config.md) — read a published flow's public config.
-* [Errors](errors.md) — the full error catalog.
-* [Event catalog](../webhooks/events.md) — the webhook you'll receive when a session completes.
+* [Flow config](flow-config.md), read a published flow's public config.
+* [Errors](errors.md), the full error catalog.
+* [Event catalog](../webhooks/events.md), the webhook you'll receive when a session completes.

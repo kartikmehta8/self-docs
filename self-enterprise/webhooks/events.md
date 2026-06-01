@@ -19,7 +19,8 @@ Fires when off-chain verification finishes, either successfully or with a defini
   "status": "valid",
   "proof_attributes": {
     "age_gte_18": true,
-    "nationality_not_in_US": true
+    "country_allowed": true,
+    "ofac_clear": true
   },
   "proof": { /* raw ZK proof JSON, or null if status != 'valid' */ },
   "verified_at": "2026-05-29T17:33:21.412Z",

@@ -25,9 +25,9 @@ Every non-2xx response uses a single envelope. The HTTP status tells you the cat
 
 | Field | Notes |
 | --- | --- |
-| `code` | Stable, machine-readable. Switch on this — never on `message`. |
+| `code` | Stable, machine-readable. Switch on this, never on `message`. |
 | `message` | Human-readable. May change; don't parse it. |
-| `details` | Optional. Extra context — e.g. validation `issues`, or `balance`/`required` for credit errors. |
+| `details` | Optional. Extra context, e.g. validation `issues`, or `balance`/`required` for credit errors. |
 
 ## Code catalog
 
@@ -35,7 +35,7 @@ These are the codes the API emits, with the HTTP status they come with and what 
 
 | `code` | Status | Meaning | What to do |
 | --- | --- | --- | --- |
-| `validation_failed` | `400` | Request body failed schema validation. `details.issues` lists the offending fields. | Fix the request. **Do not retry** — it will keep failing. |
+| `validation_failed` | `400` | Request body failed schema validation. `details.issues` lists the offending fields. | Fix the request. **Do not retry**, it will keep failing. |
 | `unauthenticated` | `401` | Missing, malformed, or invalid/revoked API key. | Check the `Authorization` header and the key. |
 | `unauthenticated` | `402` | Insufficient credits to cover the session (when the credit gate is `hard`). `details` carries `balance`, `required`, `planTier`. | Top up or upgrade; see [Credits and usage](../billing/credits-and-usage.md). |
 | `forbidden` | `403` | Key is valid but not allowed for this resource (e.g. test key against a live flow, or cross-org access). | Use a key in the right environment / org. |
@@ -78,13 +78,13 @@ if (!res.ok) {
 }
 ```
 
-In Node, the [SDK](../sdk/error-handling.md) wraps all of this in a typed `SelfApiError` with `status`, `code`, `message`, and `details` — and retries `429`/`5xx` for you.
+In Node, the [SDK](../sdk/error-handling.md) wraps all of this in a typed `SelfApiError` with `status`, `code`, `message`, and `details`, and retries `429`/`5xx` for you.
 
 ## Retry rules
 
 | Status | Retry? |
 | --- | --- |
-| `400`, `401`, `402`, `403`, `404`, `409` | **No.** These won't succeed on retry — fix the cause. |
+| `400`, `401`, `402`, `403`, `404`, `409` | **No.** These won't succeed on retry, fix the cause. |
 | `429` | Yes, after `Retry-After`. |
 | `500`, `503` | Yes, with exponential backoff (cap your attempts). |
 
@@ -94,5 +94,5 @@ When a response includes a request-ID header (`X-Request-Id`), log it. Support c
 
 ## Next
 
-* [SDK error handling](../sdk/error-handling.md) — the typed `SelfApiError` and `WebhookVerificationError`.
-* [Troubleshooting](../reference/troubleshooting.md) — symptom-first debugging.
+* [SDK error handling](../sdk/error-handling.md), the typed `SelfApiError` and `WebhookVerificationError`.
+* [Troubleshooting](../reference/troubleshooting.md), symptom-first debugging.

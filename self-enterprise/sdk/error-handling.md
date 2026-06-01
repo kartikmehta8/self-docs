@@ -14,7 +14,7 @@ try {
 } catch (err) {
   if (err instanceof SelfApiError) {
     err.status;     // number (HTTP status)
-    err.code;       // string ('validation_failed', 'flow_not_found', ...)
+    err.code;       // string ('validation_failed', 'not_found', 'unauthenticated', ...)
     err.message;    // string (human-readable)
     err.details;    // Record<string, unknown> | undefined
   } else {
@@ -44,7 +44,7 @@ try {
       return notFound('That flow or session no longer exists');
 
     case 402:
-      // Insufficient credits — trigger top-up flow / alert ops
+      // Insufficient credits, trigger top-up flow / alert ops
       return paymentRequired(err.details);   // { balance, required, planTier }
 
     case 429:

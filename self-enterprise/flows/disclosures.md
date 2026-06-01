@@ -1,141 +1,77 @@
 # Disclosures
 
-A disclosure is what the user's ZK proof attests to. There are two flavors: **predicates** (boolean, pass / fail) and **reveals** (the actual value, redacted to a category).
-
-You configure these per flow under [Configure → Rules](../dashboard/configure-a-product.md#rules).
+A disclosure is what the user's ZK proof attests to. Every disclosure is a **predicate**: a true or false answer computed from the document without revealing the underlying value. You configure them per flow under [Configure → Rules](../dashboard/configure-a-product.md#rules), and which ones are available depends on the [product](../dashboard/configure-a-product.md#pick-a-product).
 
 {% hint style="info" %}
-**Availability.** The dashboard exposes the disclosures supported for your flow's product, and only those can be published. Age, country (`included`/`excluded`), and OFAC predicates are available today; additional predicates and reveals listed below are rolling out per product. The dashboard is always the source of truth for what you can publish right now — anything it doesn't show isn't live yet for that product. The wire-level shape of a published config is documented in [Flow config](../api-reference/flow-config.md).
+The products return a **pass or fail outcome plus the predicate booleans you configured**. They do not return raw personal fields (no exact date of birth, no document number, no name). Field-level reveals are not part of these products today.
 {% endhint %}
 
-## Predicates
+## Age
 
-The user proves the predicate is true without revealing the underlying attribute.
+Available in **Pre KYC** and **Age Verification**.
 
-### `age_gte` / `age_lte`, Age bounds
+You set a `minimumAge` (and optionally a `maximumAge`). The user proves they fall in range without revealing their birth date.
 
 ```json
-{ "age_gte": 18 }
+{ "minimumAge": 18, "maximumAge": 65 }
 ```
 
-User proves they're at least 18. You don't see their date of birth or their exact age.
-
-`age_lte` is also available (e.g. for a "must be under 25" flow). Combine `age_gte` and `age_lte` for a band.
-
-`proof_attributes` output:
+The proof attests to a boolean outcome:
 
 ```json
 { "age_gte_18": true }
 ```
 
-### `nationality_in` / `nationality_not_in`, Nationality
+Use `minimumAge` alone for a simple floor (for example 18+). Add `maximumAge` for a band (for example 18 to 65).
+
+## Country
+
+Available in **Pre KYC**.
+
+You allow or deny issuing countries. Use ISO 3166-1 alpha-3 codes, and pick one of include or exclude per flow, not both.
 
 ```json
-{ "nationality_not_in": ["US", "CN", "IR", "KP"] }
+{ "excludedCountries": ["PRK", "USA"] }
 ```
 
-User proves their issuing country is (or isn't) in the list. Use ISO 3166-1 alpha-3.
-
-You can use `nationality_in` OR `nationality_not_in` per flow, not both.
-
-`proof_attributes` output:
+The user proves their document's issuing country satisfies the rule without revealing which country it is:
 
 ```json
-{ "nationality_not_in_US_CN_IR_KP": true }
+{ "country_allowed": true }
 ```
 
-### `ofac_clear`, Sanctions
+## OFAC sanctions
+
+Available in **Pre KYC**.
+
+```json
+{ "ofac": true }
+```
+
+The user proves their identity does not match the OFAC sanctions list. Self keeps the list updated daily. If the user matches, the verification comes back rejected and `ofac_clear` is omitted.
 
 ```json
 { "ofac_clear": true }
 ```
 
-User proves their name + DOB don't match the current OFAC SDN list. We auto-update the list daily.
+## Proof of human
 
-`proof_attributes` output:
+Intrinsic to **Proof of Human**, and present implicitly in the other two, since every verification is backed by a genuine document.
 
-```json
-{ "ofac_clear": true }
-```
+The user proves they are a unique, real human. There is nothing to configure. Uniqueness uses a nullifier derived from the document, so each real-world identity maps to one stable, unlinkable identifier in your product. See [How verification works → Uniqueness without identity](../get-started/how-it-works.md#uniqueness-without-identity-nullifiers).
 
-If the user matches, the verification status is `invalid` and `ofac_clear` is omitted.
-
-### `is_human`, Proof of humanity
-
-```json
-{ "is_human": true }
-```
-
-Always-on for Self Pass, a verified passport implicitly proves a unique human. You don't need to add this rule explicitly; it's enforced.
-
-The uniqueness check uses a nullifier derived from the passport, so each real-world identity can only verify a flow once per session.
-
-## Reveals
-
-A reveal returns the actual value, not just a boolean. Use sparingly, every reveal is data your service then has to handle responsibly.
-
-### `reveal_nationality`
-
-```json
-{ "reveal_nationality": true }
-```
-
-Returns the user's nationality (ISO 3166-1 alpha-3).
-
-`proof_attributes` output:
-
-```json
-{ "nationality": "IND" }
-```
-
-### `reveal_age_bucket`
-
-```json
-{ "reveal_age_bucket": ["18-25", "26-35", "36-50", "51-65", "65+"] }
-```
-
-Returns which bucket the user falls into. Less revealing than exact age, more useful than a single threshold.
-
-`proof_attributes` output:
-
-```json
-{ "age_bucket": "26-35" }
-```
-
-### `reveal_document_type`
-
-```json
-{ "reveal_document_type": true }
-```
-
-Returns whether the user verified with `biometric_passport`, `aadhaar`, or `kyc_attestation`.
-
-## Combining disclosures
-
-You can mix predicates and reveals freely. A realistic compliance flow might look like:
-
-```json
-{
-  "age_gte": 18,
-  "nationality_not_in": ["US"],
-  "ofac_clear": true,
-  "reveal_nationality": true
-}
-```
-
-This gives you: a guaranteed-adult, non-US, sanctions-clear user, with their actual nationality (e.g. for tax determination).
-
-## What's never disclosed
+## What is never disclosed
 
 * The user's name.
-* Their date of birth (only the `age_gte`/`age_lte` boolean or the age bucket).
-* Their passport number.
-* The biometric data.
-* Their exact address (only nationality, if you ask).
+* Their exact date of birth (only the age predicate outcome).
+* Their passport or document number.
+* Their biometric data.
+* Their address, and unless your flow uses country rules, anything about their country beyond the rule's pass or fail.
 
-The ZK proof attests to what the rules ask. Nothing else leaks.
+The proof attests to exactly what the flow's rules ask. Nothing else leaks.
 
 ## Related
 
 * [Anatomy of a flow](anatomy.md).
-* [Supported documents](supported-documents.md): which docs support which disclosures.
+* [Supported documents](supported-documents.md): which documents can satisfy which rules.
+* [How verification works](../get-started/how-it-works.md): the model behind these predicates.
