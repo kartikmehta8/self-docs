@@ -59,7 +59,7 @@ try {
 
 ### Error codes
 
-`err.code` is one of the API's canonical [error codes](../api-reference/errors.md). The most common from `sessions.create(...)`:
+`err.code` is a stable, machine-readable string. The most common from `sessions.create(...)`:
 
 | `code` | `status` | When | What to do |
 | --- | --- | --- | --- |
@@ -72,8 +72,6 @@ try {
 | `rate_limited` | 429 | Per-key rate limit exceeded. | Honor `Retry-After`. The SDK already retries with backoff. |
 | `vendor_unavailable` | 503 | A dependency is temporarily unavailable. | Retry with backoff. |
 | `internal_error` | 500 | Server-side error. | Retry with backoff. If persistent, contact support with the request ID. |
-
-See the [full error reference](../api-reference/errors.md) for the complete catalog.
 
 ## `WebhookVerificationError`
 

@@ -113,7 +113,7 @@ flow_versions
 └─ publishedAt
 ```
 
-The `config` table holds the canonical predicate JSON, content addressed so identical configs dedupe. That is what the dashboard surfaces in the Configure tab and what `GET /v1/flows/{flowId}/config` returns.
+The `config` table holds the canonical predicate JSON, content addressed so identical configs dedupe. That is what the dashboard surfaces in the Configure tab.
 
 {% hint style="info" %}
 On the wire the three products carry the internal slugs `pre_kyc`, `age_verification`, and `reusable_kyc` (the dashboard labels `reusable_kyc` as Proof of Human). You only ever see these in an audit export. When creating sessions you reference a `flowId`, never the product slug.

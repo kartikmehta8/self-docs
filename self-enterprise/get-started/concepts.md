@@ -69,5 +69,4 @@ See the [event catalog](../webhooks/events.md) for what's available.
 * [How verification works](how-it-works.md): the zero-knowledge model these objects sit on top of.
 * [Anatomy of a flow](../flows/anatomy.md): deep dive into rules, documents, and settings.
 * [Dashboard: API keys](../dashboard/api-keys.md): how Bearer keys map to environments.
-* [API reference](../api-reference/overview.md): the REST surface behind the SDK.
 * [Billing](../billing/credits-and-usage.md): credits, plans, metering.

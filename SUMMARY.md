@@ -47,13 +47,6 @@
 * [Credits and usage](self-enterprise/billing/credits-and-usage.md)
 * [Invoices](self-enterprise/billing/invoices.md)
 
-## API reference
-
-* [Overview & authentication](self-enterprise/api-reference/overview.md)
-* [Sessions](self-enterprise/api-reference/sessions.md)
-* [Flow config](self-enterprise/api-reference/flow-config.md)
-* [Errors](self-enterprise/api-reference/errors.md)
-
 ## Migrate
 
 * [From the open-source SDK](self-enterprise/migration/from-self-pass-sdk.md)
