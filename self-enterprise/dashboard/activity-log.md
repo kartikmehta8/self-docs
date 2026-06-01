@@ -9,7 +9,7 @@ The **Activity log** tab in the product editor shows every session against a flo
 Top of the tab:
 
 * **Sessions over time**: line chart, last 7 / 30 / 90 days.
-* **Success rate**: `completed / (completed + failed + expired)`.
+* **Success rate**: `valid / (valid + invalid + error + expired)`.
 * **Average time to completion**: from session creation to webhook fire.
 
 Below that, a paginated table:
@@ -18,7 +18,7 @@ Below that, a paginated table:
 | --- | --- |
 | Session ID | Internal verification ID. Click to drill in. |
 | External UUID | Your identifier (e.g. `user_42`) passed to `sessions.create(...)`. |
-| Status | `pending`, `completed`, `failed`, `expired`. |
+| Status | `pending`, `valid`, `invalid`, `error`, `expired`. |
 | Document | The credential type used (passport / Aadhaar / KYC). |
 | Country | Issuer country of the credential. |
 | Created at | When the session was opened. |
@@ -35,7 +35,7 @@ Clicking a row opens the session detail:
 * The disclosed `proofAttributes` (only the attributes the user proved).
 * The exact rules version evaluated.
 * Webhook delivery state, which subscriptions received which events, and the response codes.
-* If `failed`, the failure reason (`predicate_not_met`, `unsupported_document`, `expired`, `signature_invalid`, etc.).
+* If `invalid` or `error`, the reason (`predicate_not_met`, `unsupported_document`, `signature_invalid`, etc.).
 
 ## Exporting
 

@@ -11,10 +11,10 @@ Fires when off-chain verification finishes, either successfully or with a defini
 ```json
 {
   "type": "verification.completed",
-  "verification_id": "ver_01HXYZ...",
+  "verification_id": "7f3b2a1e-9c4d-4b2a-8e1f-2c6d5a4b3c2d",
   "external_uuid": "user_42",
   "flow_id": "9c0b4f1c-1d6c-4f1b-a8c4-9f0fa0a8d9e2",
-  "flow_version_id": "fv_01H...",
+  "flow_version_id": "b1e2c3d4-5678-4abc-9def-0123456789ab",
   "environment": "live",
   "status": "valid",
   "proof_attributes": {
@@ -65,7 +65,7 @@ Fires when the async decentralized-storage write for a verification succeeds.
 ```json
 {
   "type": "verification.storage_committed",
-  "verification_id": "ver_01HXYZ...",
+  "verification_id": "7f3b2a1e-9c4d-4b2a-8e1f-2c6d5a4b3c2d",
   "external_uuid": "user_42",
   "storage_uri": "ipfs://bafy...",
   "credential_id": "cred_01H...",
@@ -95,7 +95,7 @@ Fires when the storage write permanently fails (after retries exhausted).
 ```json
 {
   "type": "verification.storage_failed",
-  "verification_id": "ver_01HXYZ...",
+  "verification_id": "7f3b2a1e-9c4d-4b2a-8e1f-2c6d5a4b3c2d",
   "external_uuid": "user_42",
   "error": "ipfs_pin_timeout",
   "failed_at": "2026-05-29T17:34:00.000Z"

@@ -33,10 +33,15 @@ A session is a single attempt at verifying one user against one flow.
 It has a lifecycle:
 
 ```
-created → pending (user opened URL) → completed | failed | expired
+pending (created, awaiting the user) → valid | invalid | error | expired
 ```
 
-When `completed`, a `verification` record is finalized in your audit log with the proof attributes the user disclosed. We fire `verification.completed` on your webhook.
+* `valid` — proof verified and every predicate passed.
+* `invalid` — proof verified but a predicate failed (e.g. underage).
+* `error` — a technical failure (unsupported document, malformed proof).
+* `expired` — the user never finished before `expiresAt`.
+
+When a session reaches any terminal status, a `verification` record is finalized in your audit log with the proof attributes the user disclosed, and we fire the `verification.completed` webhook (its `status` field carries the outcome above).
 
 Sessions also have a per-session **cost** in credits, baked in at creation time. See [Credits and usage](../billing/credits-and-usage.md).
 
@@ -57,6 +62,8 @@ See the [event catalog](../webhooks/events.md) for what's available.
 
 ## Related concepts
 
+* [How verification works](how-it-works.md): the zero-knowledge model these objects sit on top of.
 * [Anatomy of a flow](../flows/anatomy.md): deep dive into rules, documents, and settings.
 * [Dashboard: API keys](../dashboard/api-keys.md): how Bearer keys map to environments.
+* [API reference](../api-reference/overview.md): the REST surface behind the SDK.
 * [Billing](../billing/credits-and-usage.md): credits, plans, metering.

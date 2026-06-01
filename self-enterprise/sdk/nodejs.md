@@ -1,6 +1,6 @@
 # Node.js / TypeScript SDK
 
-`@selfxyz/enterprise-sdk` is the official Node/TS client for the Enterprise API. It wraps session creation, retrieval, and webhook signature verification with typed payloads.
+`@selfxyz/enterprise-sdk` is the official Node/TS client for the Enterprise API. It wraps session creation, retrieval, and webhook signature verification with typed payloads. Under the hood it calls the [REST API](../api-reference/overview.md) — drop down to that if you're on a language without an SDK yet.
 
 ## Install
 
@@ -75,7 +75,7 @@ The most important fields:
 ### Get
 
 ```ts
-const detail = await self.sessions.get('ver_01HXYZ...');
+const detail = await self.sessions.get('7f3b2a1e-9c4d-4b2a-8e1f-2c6d5a4b3c2d');  // the session id
 
 detail.status;             // 'pending' | 'valid' | 'invalid' | 'error' | 'expired'
 detail.proofAttributes;    // disclosed predicates, e.g. { age_gte_18: true }
@@ -121,8 +121,8 @@ try {
   await self.sessions.create({ flowId, externalUuid });
 } catch (err) {
   if (err instanceof SelfApiError) {
-    err.status;        // 400 | 401 | 402 | 403 | 404 | 429 | 5xx
-    err.code;          // 'validation_failed' | 'unauthorized' | ...
+    err.status;        // 400 | 401 | 402 | 403 | 404 | 409 | 429 | 5xx
+    err.code;          // 'validation_failed' | 'unauthenticated' | 'not_found' | ...
     err.message;       // human-readable
     err.details;       // optional extra context
   }

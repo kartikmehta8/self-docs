@@ -8,7 +8,7 @@ For each billing period:
 
 | Line | What it is |
 | --- | --- |
-| Plan fee | Fixed monthly fee for Pro / Enterprise. Pro-rated on mid-cycle changes. |
+| Plan fee | Subscription fee for Starter / Enterprise. Pro-rated on mid-cycle changes. |
 | Included credits | The credit grant for the period, at $0, shows what was bundled in your plan. |
 | Overage usage | Per-product breakdown of metered consumption beyond the bundle. |
 | Discounts | Promo credits, contract discounts, manual adjustments. |

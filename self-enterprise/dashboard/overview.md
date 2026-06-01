@@ -55,4 +55,4 @@ Org-wide configuration:
 
 ## Permissions
 
-Today all members of an org have full access. Per-role permissions are on the roadmap; until then, treat membership as admin-equivalent and use API keys for service identity.
+Members have one of three roles — `owner`, `admin`, or `member` — which control who can manage keys, webhooks, and billing. See [People → Roles](people.md#roles). For machine access, use [API keys](api-keys.md) rather than a member's login.

@@ -15,12 +15,12 @@ For evaluation, prototypes, and side projects.
 
 Free is meant to be a real on-ramp, not a marketing tease. If you outgrow it, you'll see the next-tier prompts in-product.
 
-## Pro
+## Starter
 
-For production workloads with modest volume.
+For production workloads with modest volume. This is the self-serve paid tier — you subscribe directly from the dashboard.
 
-* **Monthly fee**: fixed.
-* **Included credits**: much larger pool than Free; spillover billed per-credit.
+* **Billing**: a fixed subscription fee, billed **monthly or annually** (you choose at checkout).
+* **Included credits**: a much larger pool than Free, refreshed each cycle; spillover billed per-credit.
 * **Rate limits**: production-grade.
 * **Support**: email, business-hours SLA.
 * **Features**: everything in Free, plus usage alerts, exportable audit log, multiple webhook endpoints per env.
@@ -32,7 +32,7 @@ For volume, regulated environments, and bespoke needs.
 * **Pricing**: negotiated; usage-based with monthly minimums.
 * **Rate limits**: negotiated.
 * **Support**: dedicated channel (Slack / Teams), 24/7 incident response, named CSM.
-* **Features**: everything in Pro, plus:
+* **Features**: everything in Starter, plus:
   * **SSO / SCIM**: enforced sign-in and directory provisioning via your identity provider (SAML, OIDC, Google Workspace, Okta).
   * **Custom data residency**: EU / US / region of your choice for verification storage.
   * **Custom contracts**: DPA, BAA, security questionnaires.

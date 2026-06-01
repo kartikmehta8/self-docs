@@ -10,7 +10,7 @@ If none of these apply, email support@self.xyz with the request ID (`X-Request-I
 
 ## Authentication
 
-### `401 unauthorized`
+### `401 unauthenticated`
 
 The API key is missing, malformed, or revoked.
 
@@ -47,19 +47,19 @@ The request body didn't match the schema. The `details.issues` array tells you w
 
 Fix the field at `path`. Don't retry on `400`, the request will keep failing.
 
-### `404 flow_not_found`
+### `404 not_found`
 
-The `flowId` is wrong, points at a draft (not yet published), or the flow is archived.
+The `flowId` (or session ID) is wrong, points at a draft (not yet published), or the flow is archived. A flow that exists but has no published version returns `409 conflict` instead.
 
-* Open the flow in the dashboard. If you don't see a "Published" badge, click **Publish version**.
+* Open the flow in the dashboard. If you don't see a "Published" badge, click **Publish version** (otherwise you'll get `409 conflict`).
 * If the flow was deleted, recreate it; the ID is gone.
 
-### `402 insufficient_credits`
+### `402` — insufficient credits
 
-Your org's credit balance is too low to cover this session's cost.
+Your org's credit balance is too low to cover this session's cost, and your [credit gate](../billing/credits-and-usage.md#insufficient-credits) is set to `hard`. (The error envelope carries `code: "unauthenticated"` with HTTP `402` — branch on the status, not the code.)
 
 * Check **Settings → Billing → Credit balance**.
-* If you're on Free, the monthly grant resets at the start of the cycle. If you're on Pro/Enterprise, configure overage.
+* If you're on Free, the monthly grant resets at the start of the cycle. If you're on Starter/Enterprise, configure overage, or switch the credit gate to `soft`.
 * Set a **low-balance notification** so this doesn't surprise you again.
 
 ### `429 rate_limited`

@@ -10,7 +10,7 @@ For the billing model and how to estimate cost, see [Billing](../billing/plans.m
 
 ### Plan card
 
-Your current plan (Free, Pro, or Enterprise; see [Plans](../billing/plans.md)) and a **Change plan** button. Changing plan opens a confirmation dialog showing what's changing (limits, included credits, monthly minimum if any) and pro-rates the switch.
+Your current plan (Free, Starter, or Enterprise; see [Plans](../billing/plans.md)) and a **Change plan** button. Changing plan opens a confirmation dialog showing what's changing (limits, included credits, monthly minimum if any) and pro-rates the switch.
 
 ### Payment method
 

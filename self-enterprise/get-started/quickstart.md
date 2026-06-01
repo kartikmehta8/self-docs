@@ -103,7 +103,9 @@ Open the `verificationUrl` from step 5, run through with a mock passport, and wa
 
 ## What's next
 
+* [How verification works](how-it-works.md): the zero-knowledge model behind that webhook.
 * [Configure a product](../dashboard/configure-a-product.md): go beyond defaults.
 * [Event catalog](../webhooks/events.md): every webhook type and its payload.
 * [SDK reference](../sdk/nodejs.md): every SDK method, with types.
+* [API reference](../api-reference/overview.md): the REST endpoints under the SDK.
 * [Error handling](../sdk/error-handling.md): what each error means and how to handle it.

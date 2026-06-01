@@ -33,19 +33,21 @@ try {
 } catch (err) {
   if (!(err instanceof SelfApiError)) throw err;
 
-  switch (err.code) {
-    case 'validation_failed':
+  // Branch on `status` for HTTP-level cases (it's the most stable signal),
+  // and on `code` for the specific reason.
+  switch (err.status) {
+    case 400:
       // err.details.issues is a Zod-issue array
       return badRequest(err.details);
 
-    case 'flow_not_found':
-      return notFound('That flow no longer exists');
+    case 404:
+      return notFound('That flow or session no longer exists');
 
-    case 'insufficient_credits':
-      // Trigger top-up flow / alert ops
-      return paymentRequired();
+    case 402:
+      // Insufficient credits — trigger top-up flow / alert ops
+      return paymentRequired(err.details);   // { balance, required, planTier }
 
-    case 'rate_limited':
+    case 429:
       // SDK already retried; we're out of budget
       return tryLater();
 
@@ -57,17 +59,21 @@ try {
 
 ### Error codes
 
+`err.code` is one of the API's canonical [error codes](../api-reference/errors.md). The most common from `sessions.create(...)`:
+
 | `code` | `status` | When | What to do |
 | --- | --- | --- | --- |
 | `validation_failed` | 400 | Request body didn't match the schema. `details.issues` lists offending fields. | Fix the request; do not retry. |
-| `unauthorized` | 401 | Missing, malformed, or revoked API key. | Check your key. |
+| `unauthenticated` | 401 | Missing, malformed, or revoked API key. | Check your key. |
+| `unauthenticated` | 402 | Org credit balance too low (hard credit gate). `details` carries `balance`, `required`, `planTier`. | Top up or upgrade; branch on **status `402`**, not the code. |
 | `forbidden` | 403 | Key valid but not allowed for this resource (e.g. test key + live flow, cross-org session). | Use a key in the right environment / org. |
-| `flow_not_found` | 404 | `flowId` doesn't exist, isn't published, or is archived. | Verify the ID in the dashboard. |
-| `session_not_found` | 404 | `sessionId` doesn't exist or belongs to another org. | Verify the ID. |
-| `insufficient_credits` | 402 | Org credit balance too low to cover this session. | Top up; either wait for the next billing period or upgrade plan. |
-| `rate_limited` | 429 | Per-key rate limit exceeded. | Honor the `Retry-After` header. The SDK already retries with backoff. |
-| `internal_error` | 500 | Server-side bug. | Retry with backoff. If persistent, contact support with the request ID. |
-| `service_unavailable` | 503 | Temporary degradation. | Retry with backoff. |
+| `not_found` | 404 | `flowId`/`sessionId` doesn't exist, is archived, or belongs to another org. | Verify the ID in the dashboard. |
+| `conflict` | 409 | The flow exists but has no published version. | Publish the flow, then retry. |
+| `rate_limited` | 429 | Per-key rate limit exceeded. | Honor `Retry-After`. The SDK already retries with backoff. |
+| `vendor_unavailable` | 503 | A dependency is temporarily unavailable. | Retry with backoff. |
+| `internal_error` | 500 | Server-side error. | Retry with backoff. If persistent, contact support with the request ID. |
+
+See the [full error reference](../api-reference/errors.md) for the complete catalog.
 
 ## `WebhookVerificationError`
 

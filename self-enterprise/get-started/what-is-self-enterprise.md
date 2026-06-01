@@ -4,6 +4,20 @@ Self Enterprise is the managed plane for zero-knowledge identity verification. Y
 
 The integration is small: one `sessions.create(...)` call, a hosted page the user opens, and a webhook on your backend.
 
+## What it replaces
+
+Self Enterprise is the managed offering on top of the open [Self protocol](../../open-source/README.md). It bundles the parts you'd otherwise build and operate yourself:
+
+| Concern | Open-source Self | Self Enterprise |
+| --- | --- | --- |
+| Configure a verification flow | Encode disclosures in your contract / backend | Configure in the dashboard, publish a version |
+| Issue credentials to users | Run your own backend + hosted page | Hand the user a `verificationUrl` from the API |
+| Verify a proof | Run the verifier yourself (or on-chain) | We verify on the hot path; you get a signed webhook |
+| Store the result | Build your own store + audit log | Optional decentralized storage; full audit log in the dashboard |
+| Bill the work | n/a | Usage-based, metered automatically |
+
+If your team wants a fast path from "we want ZK identity verification" to a working integration, Enterprise is it. If you'd rather own the full stack, the [open-source SDKs](../../open-source/README.md) are still the right tool.
+
 ## Who is it for?
 
 * **Consumer apps** running sybil resistance, age gates, or geographic compliance. Anyone who needs verified identity but doesn't want to build verification infrastructure.

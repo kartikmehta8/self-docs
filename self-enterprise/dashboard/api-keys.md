@@ -44,7 +44,7 @@ Best practice: rotate live keys at least every 90 days, and immediately on any s
 2. Roll the new value through your backends (typically a deploy with both `SELF_API_KEY_NEW` and `SELF_API_KEY_OLD` set, with traffic shifting).
 3. Once 100% of traffic is on the new key, **Revoke** the old one in the dashboard.
 
-Revoking is immediate. Within seconds, any request bearing the old key gets `401 unauthorized`.
+Revoking is immediate. Within seconds, any request bearing the old key gets `401` (`unauthenticated`).
 
 ## Revocation
 

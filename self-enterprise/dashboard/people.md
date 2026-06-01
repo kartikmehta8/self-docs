@@ -9,9 +9,21 @@
 Click **Invite member**:
 
 * **Email**: they'll receive a sign-in link.
-* **Role**: currently `admin` (all members have full access; granular roles are on the roadmap).
+* **Role**: `owner`, `admin`, or `member` (see [Roles](#roles)).
 
 The invite expires after 7 days. You can revoke a pending invite at any time.
+
+## Roles
+
+Every member has one of three roles:
+
+| Role | Can do |
+| --- | --- |
+| **`owner`** | Everything, including billing actions (change plan, toggle the credit gate) and managing other owners. |
+| **`admin`** | Manage flows, API keys, webhook endpoints, and invite members. Cannot perform owner-only billing actions. |
+| **`member`** | Read access — view flows, the activity log, usage, and webhook delivery history. Cannot create or revoke keys, manage webhooks, or invite people. |
+
+Only `owner` and `admin` can issue/revoke API keys and manage webhook endpoints. Billing's credit-gate toggle is `owner`-only.
 
 ## Members list
 
@@ -20,7 +32,7 @@ Each row shows:
 | Column | Notes |
 | --- | --- |
 | Name + email | Captured at sign-up; updated when they accept. |
-| Role | Today: `admin` for all. |
+| Role | `owner` / `admin` / `member`. |
 | Last active | Last dashboard session. |
 | Joined | When they accepted. |
 

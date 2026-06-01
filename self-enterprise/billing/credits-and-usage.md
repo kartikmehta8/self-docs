@@ -26,7 +26,7 @@ Each product has a per-verification credit cost, baked in at session creation ti
 
 (Concrete costs live in your dashboard. The numbers above are illustrative.)
 
-The cost is debited from your credit balance the moment a session is created, with a hold. If the session expires unused, the hold is **released**, you only pay for verifications the user actually completed.
+The cost is reserved against your credit balance the moment a session is created. Sessions that end `expired` or `error` are **not billed** — you only pay for verifications the user actually completed.
 
 ## What counts as "consumed"
 
@@ -34,15 +34,15 @@ The cost is debited from your credit balance the moment a session is created, wi
 | --- | --- |
 | `valid` | Yes |
 | `invalid` (predicate failed) | Yes |
-| `error` (technical failure) | No, automatically refunded |
-| `expired` (user never finished) | No, automatically refunded |
+| `error` (technical failure) | No — not billed |
+| `expired` (user never finished) | No — not billed |
 
 You pay for verification work, not for sessions the user never got to.
 
 ## Credit balance lifecycle
 
 ```
-[plan grant @ cycle start] → [debited on session create] → [refund on expired/error]
+[plan grant @ cycle start] → [reserved on session create] → [not billed on expired/error]
                                          │
                                          ▼
                           [topped up via overage purchase, if enabled]
@@ -52,19 +52,22 @@ Watch the balance in **Settings → Billing → Credit balance**. It auto-refill
 
 ## Insufficient credits
 
-If your balance is too low to cover a session's cost, `sessions.create(...)` throws `SelfApiError` with `code: 'insufficient_credits'`. The session is not created and nothing is held.
+Each org has a **credit gate** with two modes (set under **Settings → Billing**):
+
+* **`hard`** (default): if your balance is too low to cover a session's cost, `sessions.create(...)` is rejected with HTTP `402` (the SDK throws `SelfApiError` with `status: 402`). The session is not created. The error `details` include `balance`, `required`, and `planTier`.
+* **`soft`**: sessions are still created when you're out of credits, so verification isn't interrupted — you reconcile the overage on your invoice. Use this when uninterrupted verification matters more than a hard spend cap.
 
 To avoid this in production:
 
 * Set up **low-balance alerts** under **Notifications**.
-* Configure **overage** so we automatically purchase top-up credits when you cross zero (available on Pro and Enterprise plans).
+* Configure **overage** so we automatically purchase top-up credits when you cross zero (available on Starter and Enterprise plans).
 * Watch the **Credits consumed** chart in Billing to forecast burn.
 
 ## Reading usage programmatically
 
 Metered events are aggregated by our usage system. Customers on Enterprise plans get programmatic access to a usage API; reach out to your CSM.
 
-For Pro and Free, the dashboard's CSV export is the source of truth.
+For Starter and Free, the dashboard's CSV export is the source of truth.
 
 ## Test environment
 

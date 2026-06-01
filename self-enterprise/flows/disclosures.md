@@ -4,6 +4,10 @@ A disclosure is what the user's ZK proof attests to. There are two flavors: **pr
 
 You configure these per flow under [Configure → Rules](../dashboard/configure-a-product.md#rules).
 
+{% hint style="info" %}
+**Availability.** The dashboard exposes the disclosures supported for your flow's product, and only those can be published. Age, country (`included`/`excluded`), and OFAC predicates are available today; additional predicates and reveals listed below are rolling out per product. The dashboard is always the source of truth for what you can publish right now — anything it doesn't show isn't live yet for that product. The wire-level shape of a published config is documented in [Flow config](../api-reference/flow-config.md).
+{% endhint %}
+
 ## Predicates
 
 The user proves the predicate is true without revealing the underlying attribute.

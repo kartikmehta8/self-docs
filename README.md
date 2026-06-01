@@ -1,53 +1,49 @@
 ---
-icon: user
+icon: hand-wave
 cover: .gitbook/assets/110ft QuickZip Straight.png
 coverY: 0
+description: Verify real-world identity in your product — without ever holding the data.
 ---
 
-# Self Protocol
+# Welcome to Self
 
-Self is a **privacy-first, open-source identity protocol** built on **zero-knowledge proofs**. It lets developers verify real-world identity attributes — age, nationality, sanctions status, proof-of-human — without exposing personal data.
+Self verifies real-world identity using **zero-knowledge proofs**. Your users prove a fact about themselves — they're over 18, they're a unique human, they're not on a sanctions list — and you get a yes/no answer. You never see their passport, their date of birth, or their name.
 
-Self bridges the gap between real-world identity and on-chain activity. Users verify once with the Self app, then selectively disclose attributes across any application that integrates the protocol.
+**[Self Enterprise](self-enterprise/get-started/what-is-self-enterprise.md)** is the fastest way to use it: a dashboard, one SDK call, and a signed webhook. No smart contracts, no verifier to host, no PII to store.
 
-## Products
+{% hint style="success" %}
+**New here?** Go from zero to a verified user in ten minutes with the **[Quickstart](self-enterprise/get-started/quickstart.md)**.
+{% endhint %}
 
-### Self Pass
+## Start with Self Enterprise
 
-Identity verification for applications. Verify that your users are real humans, meet age requirements, or pass sanctions checks — all without seeing their personal data. Supports passports, national IDs, Aadhaar, and KYC attestations from 60+ countries.
+The managed platform. You configure a verification flow in the dashboard, call `sessions.create(...)`, hand the user a link, and receive a signed `verification.completed` webhook when they're done.
 
-[Get started with Self Pass](self-pass/README.md)
+<table data-view="cards"><thead><tr><th></th><th></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Quickstart</strong></td><td>Verified user in ten minutes.</td><td><a href="self-enterprise/get-started/quickstart.md">quickstart.md</a></td></tr><tr><td><strong>Core concepts</strong></td><td>Orgs, flows, sessions, keys, webhooks.</td><td><a href="self-enterprise/get-started/concepts.md">concepts.md</a></td></tr><tr><td><strong>How verification works</strong></td><td>The zero-knowledge model, in plain language.</td><td><a href="self-enterprise/get-started/how-it-works.md">how-it-works.md</a></td></tr><tr><td><strong>SDK</strong></td><td>The <code>@selfxyz/enterprise-sdk</code> client.</td><td><a href="self-enterprise/sdk/nodejs.md">nodejs.md</a></td></tr><tr><td><strong>Webhooks</strong></td><td>Signed events, signature verification, idempotency.</td><td><a href="self-enterprise/webhooks/overview.md">overview.md</a></td></tr><tr><td><strong>API reference</strong></td><td>The REST endpoints behind the SDK.</td><td><a href="self-enterprise/api-reference/overview.md">overview.md</a></td></tr></tbody></table>
 
-### Self Connect
+## What you can build
 
-An open-source protocol that maps off-chain identifiers (phone numbers, email addresses, Twitter handles, GitHub usernames) to on-chain blockchain addresses. Enables users to discover and transact with each other using familiar identifiers instead of hex addresses.
+* **Sybil resistance** — admit only unique, real humans, without collecting personal data.
+* **Age gates** — restrict access by age without ever learning a date of birth.
+* **Geographic & sanctions compliance** — allow or deny by nationality, screen against OFAC.
+* **Reusable KYC** — verify a user once, trust the attestation later.
+* **Marketplace trust** — verify both sides of a trade without holding either party's PII.
 
-[Get started with Self Connect](self-connect/introduction-and-overview.md)
+## Open source & protocol
 
-### Self Agent ID
+Self Enterprise runs on top of an open protocol. If you'd rather self-host the verifier, deploy your own contracts, or build on the lower layers directly, those products are open source and documented under **Open source & protocol** in the sidebar:
 
-On-chain proof-of-human identity for AI agents. Each agent receives a soulbound ERC-721 NFT backed by a ZK passport verification, enabling trustless proof-of-human for autonomous agents. Implements the ERC-8004 standard with SDKs in TypeScript, Python, and Rust.
+* **Self Pass** — the underlying identity protocol: frontend & backend SDKs, smart contracts, and the zero-knowledge proof system. (Self Enterprise is the managed version of this.)
+* **Self Connect** — map off-chain identifiers (phone, email, social handles) to on-chain addresses.
+* **Self Agent ID** — on-chain proof-of-human identity for AI agents (ERC-8004).
 
-[Get started with Self Agent ID](agent-id/overview.md)
-
-### Self Enterprise
-
-The managed plane for zero-knowledge identity verification. Configure flows in a dashboard, call a single SDK, and receive signed webhook events when users verify — without standing up smart contracts, hosting verifier infrastructure, or storing personal data yourself. Includes hosted verification pages, audit logs, and usage-based billing.
-
-[Get started with Self Enterprise](self-enterprise/README.md)
-
-## Use Cases
-
-* **Sybil resistance** — Prove users are unique humans without collecting personal data
-* **Age verification** — Gate content or services by age without revealing date of birth
-* **Compliance** — Check sanctions lists (OFAC) and nationality restrictions on-chain
-* **Airdrop protection** — Ensure token distributions go to real, unique humans
-* **Quadratic funding** — Prevent farmers from skewing rewards
-* **Agent identity** — Prove AI agents are backed by verified humans
-* **Social identity** — Map real-world identifiers to wallet addresses
+{% hint style="info" %}
+These SDKs are being superseded by Self Enterprise for most use cases. They remain fully supported and open source — start with Enterprise unless you specifically need to self-host.
+{% endhint %}
 
 ## Resources
 
-* [Workshop (ETHGlobal Buenos Aires)](https://www.loom.com/share/8a6d116a5f66415998a496f06fefdc23) — Hands-on introduction to building with Self
-* [Self Builder Group](https://t.me/+d2TGsbkSDmgzODVi) — Telegram community for developers
-* [Celo Sepolia Faucet](https://faucet.celo.org/celo-sepolia) — Testnet funds for development
+* [Dashboard](https://dashboard.self.xyz) — sign up and configure your first flow.
+* [Interactive coverage map](https://map.self.xyz/) — which documents and countries are supported.
+* [Self Builder Group](https://t.me/+d2TGsbkSDmgzODVi) — Telegram community for developers.
+* [Status](https://status.self.xyz) — live service status.
