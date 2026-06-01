@@ -5,7 +5,7 @@ description: The zero-knowledge model behind Self Enterprise, in plain language.
 
 # How verification works
 
-You don't need to understand zero-knowledge cryptography to use Self Enterprise, the SDK and webhooks hide all of it. But it helps to know what's happening, especially when you're reasoning about privacy and trust. This page explains the model in plain language.
+You don't need to understand zero-knowledge cryptography to use Self Enterprise, the SDK and webhooks hide all of it. But it helps to know what's happening, especially when you're reasoning about privacy and trust. This page explains the model in plain language. For the cryptographic depth, the [Self Pass](../../self-pass/architecture/zk-proof-architecture.md) protocol docs have the full detail.
 
 ## The one-sentence version
 
@@ -86,6 +86,14 @@ This is the core privacy guarantee: **the proof attests to exactly what your flo
 * **No PII liability.** You can't leak what you never hold. There's no passport scan in your database to breach.
 * **No verifier to run.** Self verifies proofs on the hot path and delivers the result.
 * **Auditable.** Every verification is recorded against the exact flow version it ran on, see the [Activity log](../dashboard/activity-log.md).
+
+## Going deeper
+
+The full cryptographic design (circuits, the commitment scheme, the two kinds of nullifier, the certificate trees, and the on-chain verification hub) is documented in the legacy Self Pass section:
+
+* [ZK Proof Architecture](../../self-pass/architecture/zk-proof-architecture.md)
+* [Verification in the IdentityVerificationHub](../../self-pass/architecture/verification-hub.md)
+* [OFAC & CSCA Auto-Updaters](../../self-pass/architecture/ofac-csca-auto-updaters.md)
 
 ## Next
 
