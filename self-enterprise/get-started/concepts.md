@@ -1,72 +1,44 @@
-# Concepts
+# Core concepts
 
-The model is small. Five things to know.
+A few objects, and you have the whole model.
 
 ## Organization
 
-The top-level tenant. Flows, API keys, webhook subscriptions, members, and billing all hang off an org. A user can belong to multiple orgs; you switch between them in the dashboard's top-left selector.
-
-Created on sign-up. Renamed and deactivated under **Settings → Account**.
+Your workspace. It owns everything else: products, flows, API keys, webhooks, members, and billing. A person can belong to more than one org. Each member has a role, **owner**, **admin**, or **member**, which decides who can manage keys, webhooks, and billing. See [People](../dashboard/people.md).
 
 ## Product
 
-A product is the kind of verification you're running. There are three, and each one decides what the user has to prove and which configuration options you get:
-
-* **Pre KYC**: a pre-screening check before full KYC. Confirms the user holds a genuine government document, optionally meets an age floor, comes from an allowed country, and clears the OFAC sanctions list. Outcome: approved or rejected.
-* **Age Verification**: proves the user meets an age threshold (say 18 or 21) without revealing their birth date. Outcome: approved or rejected.
-* **Proof of Human**: proves the user is a unique, real human backed by a government document, for sybil resistance. No age or country rules. Outcome: verified or failed.
-
-You pick the product when you create a flow. Each product has its own per-verification cost; see [Plans](../billing/plans.md).
+The kind of verification you run: **Pre KYC**, **Age Verification**, or **Proof of Human**. The product decides what the user proves and which rules you can set.
 
 ## Flow
 
-A flow is a published, versioned configuration of one product. It pins:
+A published, versioned configuration of one product (the dashboard calls it a *config*). It pins the rules, the accepted documents, and the redirect and branding settings. Each publish creates a new immutable version. You pass its `flowId` to `sessions.create(...)`.
 
-* **Rules**: what the user must prove, drawn from the chosen product's options (an age floor, country allow or deny lists, OFAC).
-* **Documents**: which credential types are acceptable.
-* **Settings**: success URL, failure URL, branding.
+## Session
 
-Flows are versioned. Editing creates a draft; publishing freezes the draft as a new version and points the flow's `latestPublishedVersionId` at it. Older versions stay queryable for audit.
-
-A `flowId` is what you pass to `sessions.create(...)`.
-
-## Session (a.k.a. verification)
-
-A session is a single attempt at verifying one user against one flow.
-
-It has a lifecycle:
+One verification attempt: one user, one flow.
 
 ```
-pending (created, awaiting the user) → valid | invalid | error | expired
+pending → valid | invalid | error | expired
 ```
 
-* `valid`, proof verified and every predicate passed.
-* `invalid`, proof verified but a predicate failed (e.g. underage).
-* `error`, a technical failure (unsupported document, malformed proof).
-* `expired`, the user never finished before `expiresAt`.
-
-When a session reaches any terminal status, a `verification` record is finalized in your audit log with the proof attributes the user disclosed, and we fire the `verification.completed` webhook (its `status` field carries the outcome above).
-
-Sessions also have a per-session **cost** in credits, baked in at creation time. See [Credits and usage](../billing/credits-and-usage.md).
+On any terminal status we record it in your [activity log](../dashboard/activity-log.md) and fire the `verification.completed` webhook. Each session has a credit cost, fixed when it is created.
 
 ## API key
 
-A Bearer credential used by the Enterprise SDK to authenticate. Issued in two flavors:
+A bearer secret the SDK uses, scoped to one org and one environment:
 
-* `sk_test_...`: test environment. Talks to test flows only. Mock passports accepted. No credits charged.
-* `sk_live_...`: production. Real proofs. Real credits.
+* `sk_test_…`: test flows, mock passports, never billed.
+* `sk_live_…`: production, real proofs, real credits.
 
-Keys are scoped to an org. Issue, rotate, and revoke under **Settings → API keys**.
+Test and live are fully isolated; the prefix decides which one a request hits. Manage keys under **Deploy** tab.
 
-## Webhook subscription
+## Webhook endpoint
 
-A signed delivery channel for events. You register a URL in **Settings → Webhooks** and pick which event types you want. We send signed JSON payloads with automatic retries.
+An HTTPS URL you register under **Settings → Webhooks** to receive signed events like `verification.completed`. We deliver with automatic retries; verify the signature with the SDK. See the [event catalog](../webhooks/events.md).
 
-See the [event catalog](../webhooks/events.md) for what's available.
+## Related
 
-## Related concepts
-
-* [How verification works](how-it-works.md): the zero-knowledge model these objects sit on top of.
-* [Anatomy of a flow](../flows/anatomy.md): deep dive into rules, documents, and settings.
-* [Dashboard: API keys](../dashboard/api-keys.md): how Bearer keys map to environments.
-* [Billing](../billing/credits-and-usage.md): credits, plans, metering.
+* [How verification works](how-it-works.md): the zero-knowledge model underneath.
+* [Anatomy of a flow](../flows/anatomy.md): rules, documents, and versions in detail.
+* [Billing](../billing/credits-and-usage.md): credits and metering.

@@ -12,7 +12,7 @@ Mock passports only work against flows in your **test** environment (i.e. sessio
 
 To create a mock passport, on the Self app's first screen, tap 5 times with one finger on the **Passport** button.
 
-<figure><img src="../.gitbook/assets/Screenshot_20251029-173127.png" alt="" width="188"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot_20251029-173127.png" alt="" width="188"><figcaption></figcaption></figure>
 
 This opens the mock-passport creation screen. Set the attributes you want to test against (nationality, age, OFAC status), then save.
 
@@ -22,14 +22,14 @@ To stop using a mock passport, select a different document to use. If no other d
 
 
 
-<figure><img src="../.gitbook/assets/Manage-Id-Documents.png" alt="" width="188"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Manage-Id-Documents.png" alt="" width="188"><figcaption></figcaption></figure>
 
 Click **Add New Document.**
 
-<figure><img src="../.gitbook/assets/add-document.png" alt="" width="188"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/add-document.png" alt="" width="188"><figcaption></figcaption></figure>
 
 
 
 If the document is already registered, it can be selected from the Home page.
 
-<figure><img src="../.gitbook/assets/Select-Document (1).png" alt="" width="188"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Select-Document (1).png" alt="" width="188"><figcaption></figcaption></figure>

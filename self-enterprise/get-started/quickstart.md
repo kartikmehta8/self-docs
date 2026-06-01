@@ -14,7 +14,7 @@ After sign-up you'll be prompted to create an organization. An org owns flows, A
 
 ## 2. Create a flow
 
-![Self Dashboard](../.gitbook/assets/self-dashboard.png)
+![Self Dashboard](../../.gitbook/assets/self-dashboard.png)
 
 The dashboard home shows a card for each of the three products. Pick the one you want to verify:
 
@@ -40,7 +40,7 @@ Fill them in, then publish. Your configuration now has a published `flowId`. Cop
 
 **Settings → API keys → Create key**. Choose `test` while you're integrating. The key (`sk_test_...`) is shown once, store it as `SELF_API_KEY` in your backend's secret manager.
 
-![Test API key](../.gitbook/assets/api-key-test.png)
+![Test API key](../../.gitbook/assets/api-key-test.png)
 
 ## 4. Install the SDK
 
