@@ -1,8 +1,8 @@
 # API keys
 
-self-docs/.gitbook/assets/api-key-test.png
-
 API keys authenticate the SDK. You generate them on a product's **Deploy** tab, in the **Secret API Keys (server-side)** card, once you've saved the configuration.
+
+![Generate a test API key](../../.gitbook/assets/api-key-test.png)
 
 ## Generating a key
 
