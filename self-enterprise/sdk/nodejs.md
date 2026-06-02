@@ -24,26 +24,13 @@ const self = new SelfClient({
 });
 ```
 
-### Options
-
-```ts
-interface SelfClientOptions {
-  /** Bearer API key. Required. */
-  apiKey: string;
-
-  /** Environment hint. The actual environment is embedded in the API key. */
-  environment?: 'test' | 'live';
-
-  /** Override the base URL (default: https://api.self.xyz). */
-  baseUrl?: string;
-}
-```
-
-`environment` is a hint for your own code clarity, the live behavior is determined by the key prefix. `baseUrl` is useful for staging or self-hosted edges.
+The API key is the only thing you pass. Whether the client talks to test or live is determined by the key prefix (`sk_test_` or `sk_live_`).
 
 ## Sessions
 
 ### Create
+
+Get the `flowId` by publishing a configuration in the dashboard, it's shown on the product's **Deploy** tab. See [Configure a product](../dashboard/configure-a-product.md).
 
 ```ts
 const session = await self.sessions.create({
@@ -121,15 +108,15 @@ try {
   await self.sessions.create({ flowId, externalUuid });
 } catch (err) {
   if (err instanceof SelfApiError) {
-    err.status;        // 400 | 401 | 402 | 403 | 404 | 409 | 429 | 5xx
+    err.statusCode;    // 400 | 401 | 402 | 403 | 404 | 409 | 429 | 5xx
     err.code;          // 'validation_failed' | 'unauthenticated' | 'not_found' | ...
     err.message;       // human-readable
-    err.details;       // optional extra context
+    err.details;       // optional extra context (Record<string, unknown>)
   }
 }
 ```
 
-See [Error handling](error-handling.md) for the full catalog and retry guidance.
+The SDK doesn't retry, handle transient `429` and `5xx` responses yourself (back off and retry). See [Error handling](error-handling.md) for the full code catalog.
 
 ## Compatibility
 

@@ -123,8 +123,8 @@ if (event.type === 'verification.completed') {
 * **Using the wrong secret.** Each endpoint has its own `whsec_...`. If you have multiple endpoints registered (e.g. staging + prod), don't share secrets across them.
 * **Trusting the payload without verifying.** Always call `SelfWebhooks.verify(...)` first. Don't parse `event.type` until verification succeeds.
 
-## Replays
+## Redeliveries
 
-If the dashboard replays a past event, the body and signature are valid and verification succeeds normally. Replays carry a `svix-replay: true` header if you need to distinguish them, but most handlers should be idempotent enough that they don't need to.
+The same event can arrive more than once (a retry after a failed delivery, for example). The body and signature are valid each time, so verification succeeds normally. Make your handler idempotent, dedupe on the event's `verification_id`.
 
 See [Best practices](../webhooks/best-practices.md) for idempotency patterns.
