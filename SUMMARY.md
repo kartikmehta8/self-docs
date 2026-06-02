@@ -24,6 +24,7 @@
 * [Node.js / TypeScript](self-enterprise/sdk/nodejs.md)
 * [Verify webhooks](self-enterprise/sdk/verify-webhooks.md)
 * [Error handling](self-enterprise/sdk/error-handling.md)
+* [API reference](self-enterprise/sdk/api-reference.md)
 
 ## Webhooks
 

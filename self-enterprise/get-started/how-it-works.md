@@ -1,5 +1,4 @@
 ---
-icon: shield-halved
 description: The zero-knowledge model behind Self Enterprise, in plain language.
 ---
 

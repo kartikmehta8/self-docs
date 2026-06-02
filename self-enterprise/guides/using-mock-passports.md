@@ -1,7 +1,3 @@
----
-icon: passport
----
-
 # Using mock passports
 
 Mock passports are how you exercise verification end-to-end without a real passport. Useful for development, CI, and demos.
