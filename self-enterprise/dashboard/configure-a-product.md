@@ -40,7 +40,7 @@ Beyond the pass or fail rules, you can ask the user to disclose specific documen
 
 ## Save and publish
 
-Saving stores your changes. To take the configuration live, publish it from the [Deploy](publish-a-flow-version.md) tab, where it gets a `flowId` and you generate API keys. The dashboard validates the configuration before you can publish.
+Saving stores your changes. To take the configuration live, publish it from the **Deploy** tab, where it gets a `flowId` and you generate [API keys](api-keys.md). The dashboard validates the configuration before you can publish.
 
 A product keeps one active configuration at a time. In-flight sessions keep using the version they were created against, so publishing never breaks an open session.
 
@@ -48,4 +48,4 @@ A product keeps one active configuration at a time. In-flight sessions keep usin
 
 * [Disclosures](../flows/disclosures.md): what each rule and reveal proves.
 * [Supported documents](../flows/supported-documents.md): which documents work where.
-* [Publish a flow version](publish-a-flow-version.md): deploy and generate keys.
+* [API keys](api-keys.md): generate the keys your backend uses.

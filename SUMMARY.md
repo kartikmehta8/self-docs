@@ -13,7 +13,6 @@
 
 * [Overview](self-enterprise/dashboard/overview.md)
 * [Configure a product](self-enterprise/dashboard/configure-a-product.md)
-* [Publish a flow version](self-enterprise/dashboard/publish-a-flow-version.md)
 * [Activity log](self-enterprise/dashboard/activity-log.md)
 * [API keys](self-enterprise/dashboard/api-keys.md)
 * [Webhooks](self-enterprise/dashboard/webhooks.md)

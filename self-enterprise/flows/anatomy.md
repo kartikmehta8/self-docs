@@ -124,4 +124,4 @@ On the wire the three products carry the internal slugs `pre_kyc`, `age_verifica
 * [Disclosures](disclosures.md): every outcome a proof can attest to.
 * [Supported documents](supported-documents.md): what each credential type can prove.
 * [Test vs. live](test-vs-live.md).
-* [Publish a flow version](../dashboard/publish-a-flow-version.md).
+* [Configure a product](../dashboard/configure-a-product.md).

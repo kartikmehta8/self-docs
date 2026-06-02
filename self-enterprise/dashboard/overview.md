@@ -15,7 +15,7 @@ The landing surface. Shows recent activity across your products, quick links to 
 Each product (Pre KYC, Age Verification, Proof of Human) has its own page and holds **one active configuration at a time**. The page splits into tabs:
 
 * [Configure](configure-a-product.md): rules, documents, settings.
-* [Deploy](publish-a-flow-version.md): preview the draft, API keys.
+* **Deploy**: publish the configuration and generate [API keys](api-keys.md).
 * [Activity log](activity-log.md): verifications, errors over time.
 
 To change a live configuration you archive it first, then create a new one.
@@ -35,7 +35,7 @@ Org-wide configuration, organized into tabs:
 * [**People**](people.md): members and invites.
 * **System Status**: live service status.
 
-(API keys aren't here, you generate them on a product's [Deploy](publish-a-flow-version.md) tab.)
+(API keys aren't here, you generate them on a product's **Deploy** tab. See [API keys](api-keys.md).)
 
 ## Permissions
 
