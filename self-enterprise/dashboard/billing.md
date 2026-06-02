@@ -1,54 +1,30 @@
 # Billing (dashboard)
 
-**Settings → Billing**. The plan card, payment method, credit balance, and invoices.
+**Settings → Usage & Billing**. See your credit usage and manage your plan. For the credit model and how cost is computed, see [Credits and usage](../billing/credits-and-usage.md).
 
-For the billing model and how to estimate cost, see [Billing](../billing/plans.md).
+![Usage & Billing](../../.gitbook/assets/billing.png)
 
-> 📸 _**Screenshot:** Billing page showing the plan card, credit balance, and usage chart._
+## What's on the tab
 
-## What's on this page
+### Credits used
 
-### Plan card
+A meter showing how many credits you've used against your plan's allotment, and how many remain. Enterprise plans have no fixed cap, so the meter shows the remaining balance only.
 
-Your current plan (Free, Starter, or Enterprise; see [Plans](../billing/plans.md)) and a **Change plan** button. Changing plan opens a confirmation dialog showing what's changing (limits, included credits, monthly minimum if any) and pro-rates the switch.
+### Your Self organization plan
 
-### Payment method
+Your current plan (**Free**, **Starter**, or **Enterprise**), its price, and, when the plan renews on a cycle, the **next invoice** date.
 
-A card on file with our payment processor. **Update** opens a secure checkout flow where you can replace it. We don't store card data ourselves; only a customer reference.
+## Actions
 
-For ACH or invoiced billing (Enterprise plans), contact billing@self.xyz.
+* **Manage plan**: opens the pricing dialog to change or upgrade your plan. Free is the default, Starter is self-serve, Enterprise is arranged with sales. See [Plans](../billing/plans.md).
+* **Update billing**: opens the secure Stripe customer portal, where you manage your payment method and view past invoices. Self never stores your card details, only a customer reference.
 
-### Credit balance
+## Low balance
 
-Your current credit balance, what you've been granted minus what you've consumed. Verifications draw from this balance at session creation time. See [Credits and usage](../billing/credits-and-usage.md) for the rules.
-
-If your balance approaches zero on a metered plan, you'll see a warning banner here and at the top of the dashboard. Set up usage alerts under **Notifications** to get an email or webhook before you hit zero.
-
-### Usage charts
-
-* **Verifications by product**: stacked area, last 30 / 90 / 365 days.
-* **Credits consumed**: credits drawn down per day.
-* **Cost**: current month's spend in USD (the credit-to-USD exchange rate is set on your plan's rate card).
-
-### Invoices
-
-Past invoices, downloadable as PDF. Each shows:
-
-* Period covered.
-* Plan fee (if any).
-* Metered usage by product.
-* Tax (where applicable).
-
-## Notifications
-
-Configure billing-related notifications:
-
-* **Low balance**: email when credits dip below a threshold.
-* **Invoice issued**: email when a new invoice posts.
-* **Payment failed**: email when we can't charge the card on file.
+When your credit balance runs low you'll see a warning on this tab. To add capacity, upgrade your plan from **Manage plan** (or talk to sales about Enterprise).
 
 ## Related
 
-* [Plans](../billing/plans.md).
-* [Credits and usage](../billing/credits-and-usage.md).
-* [Invoices](../billing/invoices.md).
+* [Plans](../billing/plans.md): what each tier includes.
+* [Credits and usage](../billing/credits-and-usage.md): how the per-verification cost works.
+* [Invoices](../billing/invoices.md): billing periods and charges (managed in the Stripe portal).

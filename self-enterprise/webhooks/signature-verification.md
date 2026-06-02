@@ -48,9 +48,7 @@ The webhook signing secret (`whsec_...`) is the raw secret bytes after stripping
 
 ## Rotating the secret
 
-You can rotate a webhook secret in **Settings → Webhooks → \[endpoint\] → Rotate secret**. For 24 hours both old and new secrets verify; after that, only the new one. See [Dashboard: Webhooks → Rotation](../dashboard/webhooks.md#rotation).
-
-To handle the overlap window without code changes, roll the new secret in via env and redeploy within the 24-hour window.
+If a signing secret is rotated, the new `whsec_...` is revealed once, the same way it is when the endpoint is first created. Roll it into your handler by updating `SELF_WEBHOOK_SECRET` and redeploying.
 
 ## Common failure modes
 
