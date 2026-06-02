@@ -8,11 +8,11 @@ Your workspace. It owns everything else: products, flows, API keys, webhooks, me
 
 ## Product
 
-The kind of verification you run: **Pre KYC**, **Age Verification**, or **Proof of Human**. The product decides what the user proves and which rules you can set.
+The kind of verification you run: **Pre KYC**, **Age Verification**, or **Proof of Human**. The product decides what the user proves and which rules you can set. See [Configure a product](../dashboard/configure-a-product.md).
 
 ## Flow
 
-A published, versioned configuration of one product (the dashboard calls it a *config*). It pins the rules, the accepted documents, and the redirect and branding settings. Each publish creates a new immutable version. You pass its `flowId` to `sessions.create(...)`.
+A published, versioned configuration of one product (the dashboard calls it a *config*). It pins the product and its rules. Once published it's immutable, to change it you archive it and create a new one. You pass its `flowId` to `sessions.create(...)`. See [Anatomy of a flow](../flows/anatomy.md).
 
 ## Session
 
@@ -31,7 +31,7 @@ A bearer secret the SDK uses, scoped to one org and one environment:
 * `sk_test_…`: test flows, mock passports, never billed.
 * `sk_live_…`: production, real proofs, real credits.
 
-Test and live are fully isolated; the prefix decides which one a request hits. Manage keys under **Deploy** tab.
+Test and live are fully isolated; the prefix decides which one a request hits. You generate keys on a product's **Deploy** tab. See [API keys](../dashboard/api-keys.md).
 
 ## Webhook endpoint
 
