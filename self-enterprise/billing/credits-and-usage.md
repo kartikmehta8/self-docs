@@ -1,22 +1,18 @@
 # Credits and usage
 
-How we meter what you use and turn it into a bill.
+## Credits
 
-## The credit model
+Usage is measured in **credits**, an abstract unit. How many you have depends on your plan:
 
-Usage is denominated in **credits**, an abstract unit. Each plan includes some credits per month, and your USD price-per-credit is set on your plan's rate card.
+* **Free**: a one-time grant that never renews.
+* **Starter**: a monthly allotment that resets each billing cycle.
+* **Enterprise**: custom grants.
 
-> Credits are not USD cents. The exchange rate is part of your contract; check **Settings → Billing → Plan card** for your current rate.
+See [Plans](plans.md).
 
-This lets us:
+## Per-verification cost
 
-* Adjust per-product pricing without touching your contract.
-* Run promos and waivers in credits.
-* Set spending caps independently of session volume.
-
-## Per-product cost
-
-Each product has a per-verification credit cost, baked in at session creation time (not at completion):
+Each verification costs a fixed number of credits, decided by the product and set when the session is created (not at completion):
 
 | Product | Credit cost (illustrative) |
 | --- | --- |
@@ -24,69 +20,30 @@ Each product has a per-verification credit cost, baked in at session creation ti
 | Age Verification | 2 |
 | Proof of Human | 3 |
 
-(Concrete costs live in your dashboard. The numbers above are illustrative.)
+Concrete costs are shown in the dashboard; the numbers above are illustrative. To estimate spend, multiply your expected verifications by the product's cost.
 
-The cost is reserved against your credit balance the moment a session is created. Sessions that end `expired` or `error` are **not billed**, you only pay for verifications the user actually completed.
+## What you're charged for
 
-## What counts as "consumed"
+You're billed for verifications that finish, not for sessions the user abandons:
 
-| Session terminal status | Consumed? |
+| Session result | Charged? |
 | --- | --- |
 | `valid` | Yes |
-| `invalid` (predicate failed) | Yes |
-| `error` (technical failure) | No, not billed |
-| `expired` (user never finished) | No, not billed |
-
-You pay for verification work, not for sessions the user never got to.
-
-## Credit balance lifecycle
-
-```
-[plan grant @ cycle start] → [reserved on session create] → [not billed on expired/error]
-                                         │
-                                         ▼
-                          [topped up via overage purchase, if enabled]
-```
-
-Watch the balance in **Settings → Billing → Credit balance**. It auto-refills at the start of each cycle.
+| `invalid` (a rule failed) | Yes |
+| `error` (technical failure) | No |
+| `expired` (never completed) | No |
 
 ## Insufficient credits
 
-Each org has a **credit gate** with two modes (set under **Settings → Billing**):
+By default Self uses a **hard credit gate**: if your balance can't cover a session's cost, `sessions.create(...)` is rejected with HTTP `402` (the SDK throws `SelfApiError` with `statusCode: 402`, and `details` carries `balance`, `required`, and `planTier`). The session is not created.
 
-* **`hard`** (default): if your balance is too low to cover a session's cost, `sessions.create(...)` is rejected with HTTP `402` (the SDK throws `SelfApiError` with `status: 402`). The session is not created. The error `details` include `balance`, `required`, and `planTier`.
-* **`soft`**: sessions are still created when you're out of credits, so verification isn't interrupted, you reconcile the overage on your invoice. Use this when uninterrupted verification matters more than a hard spend cap.
-
-To avoid this in production:
-
-* Set up **low-balance alerts** under **Notifications**.
-* Configure **overage** so we automatically purchase top-up credits when you cross zero (available on Starter and Enterprise plans).
-* Watch the **Credits consumed** chart in Billing to forecast burn.
-
-## Reading usage programmatically
-
-Metered events are aggregated by our usage system. Customers on Enterprise plans get programmatic access to a usage API; reach out to your CSM.
-
-For Starter and Free, the dashboard's CSV export is the source of truth.
+To add capacity, upgrade your plan from **Manage plan** (or talk to sales about Enterprise). Watch the credits meter on the **Settings → Usage & Billing** tab so this doesn't surprise you.
 
 ## Test environment
 
-Test verifications never consume credits and never appear on invoices. They're not even tracked against rate-limit windows. Use test freely.
-
-## Examples
-
-### Sizing for a launch
-
-You expect 50,000 Age Verification checks in the first month (2 credits each):
-
-* Expected consumption: 50,000 × 2 = 100,000 credits.
-* If your plan includes 40,000, you'll need 60,000 in overage, so verify your overage rate before launch.
-
-### Diagnosing a spike
-
-The **Credits consumed** chart shows daily burn. If you see a spike, drill into the [Activity log](../dashboard/activity-log.md) for the same day, the External UUID column usually identifies the culprit (a stuck retry loop, a bot, a buggy integration).
+Test verifications (sessions created with an `sk_test_` key) never consume credits. Use test freely.
 
 ## Related
 
-* [Plans](plans.md).
-* [Dashboard: Billing](../dashboard/billing.md).
+* [Plans](plans.md): what each tier includes.
+* [Dashboard: Billing](../dashboard/billing.md): the Usage & Billing tab.

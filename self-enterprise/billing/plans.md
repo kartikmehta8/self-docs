@@ -1,61 +1,48 @@
 # Plans
 
-Three tiers. Pick based on volume and support needs. Plans are configured under [Settings → Billing](../dashboard/billing.md) in the dashboard.
+Three tiers. Manage yours on the **Settings → Usage & Billing** tab via **Manage plan**. Concrete prices and credit amounts are shown there; the shape below is what each tier unlocks.
 
-> Concrete prices and limits live in the dashboard and on [self.xyz/pricing](https://self.xyz/pricing). The shape below describes what each plan unlocks, not the exact dollar amounts.
+![Plans](../../.gitbook/assets/enterprise-plans.png)
 
 ## Free
 
-For evaluation, prototypes, and side projects.
+The default plan, for evaluation and small projects.
 
-* **Included credits**: a monthly allotment, enough to integrate end-to-end and run small-volume traffic.
-* **Rate limits**: modest; sufficient for a single backend.
-* **Support**: community (Discord, GitHub issues).
-* **Features**: all three products (Pre KYC, Age Verification, Proof of Human), test and live environments, webhooks, audit log.
-
-Free is meant to be a real on-ramp, not a marketing tease. If you outgrow it, you'll see the next-tier prompts in-product.
+* **Credits**: a one-time signup grant that **never expires and never renews**.
+* **Products**: Pre KYC, Age Verification, Proof of Human.
+* Test and live environments, plus webhooks.
 
 ## Starter
 
-For production workloads with modest volume. This is the self-serve paid tier, you subscribe directly from the dashboard.
+The self-serve paid tier, subscribe from **Manage plan**.
 
-* **Billing**: a fixed subscription fee, billed **monthly or annually** (you choose at checkout).
-* **Included credits**: a much larger pool than Free, refreshed each cycle; spillover billed per-credit.
-* **Rate limits**: production-grade.
-* **Support**: email, business-hours SLA.
-* **Features**: everything in Free, plus usage alerts, exportable audit log, multiple webhook endpoints per env.
+* **Billing**: a fixed fee, billed **monthly or annually** (you choose at checkout).
+* **Credits**: a monthly allotment that **resets each billing cycle**.
+* **Everything in Free**, plus **Hosted Proof Requests**.
 
 ## Enterprise
 
-For volume, regulated environments, and bespoke needs.
+For volume and regulated environments. Arranged with sales, there's no self-serve checkout.
 
-* **Pricing**: negotiated; usage-based with monthly minimums.
-* **Rate limits**: negotiated.
-* **Support**: dedicated channel (Slack / Teams), 24/7 incident response, named CSM.
-* **Features**: everything in Starter, plus:
-  * **SSO / SCIM**: enforced sign-in and directory provisioning via your identity provider (SAML, OIDC, Google Workspace, Okta).
-  * **Custom data residency**: EU / US / region of your choice for verification storage.
-  * **Custom contracts**: DPA, BAA, security questionnaires.
-  * **Direct line to engineering**: feature requests routed through your CSM.
+* **Credits**: custom grants.
+* **Everything in Starter**, plus Audit Tooling, Custom Workspaces, Team Management, Solutions Engineers, Mobile SDK, SLA and uptime guarantees, Agentic ID, and Self Perks.
 
-Contact sales@self.xyz to start an Enterprise conversation.
+Contact sales@self.xyz to start.
 
 ## Switching plans
 
-In **Settings → Billing → Change plan**:
+From **Settings → Usage & Billing**:
 
-* **Upgrading**: change takes effect immediately. You're pro-rated for the remainder of the cycle.
-* **Downgrading**: change takes effect at the end of the current cycle. Existing flows and webhooks continue working; you can't downgrade below your committed minimum on Enterprise.
-* **Pausing**: not directly supported. The closest is downgrading to Free; usage continues at Free limits.
+* **Manage plan**: upgrade or change tier. Upgrades take effect immediately and are prorated for the rest of the cycle.
+* **Update billing**: opens the Stripe customer portal to change your payment method or cancel.
 
 ## What you don't pay for
 
-* Test-environment verifications. Test traffic doesn't bill.
-* Webhook deliveries. Bundled into the per-verification cost.
-* Audit log storage and dashboard usage.
-* Sessions that never complete (e.g. `expired`, or the user abandons after creation). You only pay for verifications that finish with a non-`expired` status. See [Credits and usage](credits-and-usage.md).
+* Test-environment verifications, test traffic doesn't bill.
+* Webhook deliveries, bundled into the per-verification cost.
+* Sessions that end `expired` or `error`, only completed verifications are billed. See [Credits and usage](credits-and-usage.md).
 
 ## Related
 
-* [Credits and usage](credits-and-usage.md): how the per-verification cost is computed.
+* [Credits and usage](credits-and-usage.md): how the per-verification cost works.
 * [Dashboard: Billing](../dashboard/billing.md).
