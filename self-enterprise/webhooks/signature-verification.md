@@ -23,7 +23,7 @@ See [SDK: Verify webhooks](../sdk/verify-webhooks.md) for the full setup includi
 
 ## Other languages
 
-Official SDKs for Python, Go, Ruby, and Rust are on the roadmap. In the meantime, verify manually using HMAC-SHA256 (see below) or contact support@self.xyz for a verification helper.
+The Node SDK is the official client today. From any other language, verify manually with HMAC-SHA256 (see below). The headers and scheme are standard, so a Svix-compatible verification library works too.
 
 ## Manual verification
 

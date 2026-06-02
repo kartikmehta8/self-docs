@@ -4,7 +4,7 @@ A small list of things that prevent the common production fires.
 
 ## 1. Make handlers idempotent
 
-We deliver at-least-once. Network blips, our own retries, and manual replays all produce duplicates. Your handler should treat duplicates as a non-event.
+We deliver at-least-once. Network blips and our own retries produce duplicates. Your handler should treat duplicates as a non-event.
 
 ### Dedup by event ID
 
@@ -25,7 +25,7 @@ if (inserted.rowCount === 0) {
 await applyVerification(event);
 ```
 
-Use the `verification_id` (stable across retries), not the `svix-id` (unique per delivery, including replays).
+Use the `verification_id` (stable across retries), not the `svix-id` (unique per delivery).
 
 ## 2. Acknowledge quickly, work async
 
@@ -97,22 +97,13 @@ So:
 
 ## 7. Use one endpoint per environment
 
-Don't share a single endpoint between staging and production. They'll have different secrets and different traffic profiles. Register `https://api.example.com/webhooks/self` for prod and `https://api-staging.example.com/webhooks/self` for staging, each with its own subscription.
+Don't share a single endpoint between staging and production. They'll have different secrets and different traffic profiles. Register one endpoint for `test` and one for `live`, each with its own URL and signing secret.
 
-## 8. Watch the failure queue
+## 8. Monitor failures on your side
 
-Set up an alert when **Settings → Webhooks → Failed deliveries** grows. A handler that's been silently failing for two days is a known production incident pattern.
+Alert on your own handler's error rate (the `5xx` and signature-failure responses it returns). A handler that's been silently failing is a known production incident pattern, and you'll spot it faster from your own metrics than from the deliveries. Failed deliveries are retried automatically, so once you fix the handler the backlog drains on its own.
 
-## 9. Replay safely
-
-When you ship a fix and want to drain failed deliveries, you can:
-
-1. **Replay all** from the dashboard. Fastest, but be sure your handler is ready.
-2. **Replay one, observe, then replay the rest**. Safer if you've been broken for a while.
-
-Replays carry `svix-replay: true` if you want to log them distinctly. Your handler should be idempotent enough that you don't need to handle replays specially.
-
-## 10. Log the request ID
+## 9. Log the delivery ID
 
 Every delivery includes `svix-id`. Log it on every handler invocation:
 

@@ -53,7 +53,7 @@ Fires when off-chain verification finishes, either successfully or with a defini
 
 ### Event ID (for deduplication)
 
-The deduplication key is `<verification_id>-<status>`.
+The deduplication key is `<verification_id>-completed` (the same for every status, so a retry of this event reuses it).
 
 ---
 
