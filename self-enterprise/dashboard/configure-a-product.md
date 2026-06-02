@@ -42,7 +42,7 @@ Beyond the pass or fail rules, you can ask the user to disclose specific documen
 
 Saving stores your changes. To take the configuration live, publish it from the **Deploy** tab, where it gets a `flowId` and you generate [API keys](api-keys.md). The dashboard validates the configuration before you can publish.
 
-A product keeps one active configuration at a time. In-flight sessions keep using the version they were created against, so publishing never breaks an open session.
+A product keeps one active configuration at a time. Once published, a configuration is immutable, you can't edit it. To change anything, archive it and create a new one. In-flight sessions keep using the version they were created against, so archiving never breaks an open session.
 
 ## Related
 
