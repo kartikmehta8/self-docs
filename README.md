@@ -11,7 +11,7 @@ Self is a privacy-first, open-source identity protocol built on zero-knowledge p
 
 Self bridges the gap between real-world identity and on-chain activity. Users verify once with the Self app, then selectively disclose attributes across any application that integrates the protocol.
 
-**Self Enterprise** is the managed way to use it: configure a flow in the dashboard, call the SDK, and get a signed result back.
+**[Self Enterprise](self-enterprise/get-started/what-is-self-enterprise.md)** is the managed way to use it: configure a flow in the dashboard, call the SDK, and get a signed result back.
 
 {% hint style="success" %}
 **New here?** Go from zero to a verified user in ten minutes with the **[Quickstart](self-enterprise/get-started/quickstart.md)**.

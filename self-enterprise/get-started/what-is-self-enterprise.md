@@ -1,6 +1,6 @@
 # What is Self Enterprise
 
-Self Enterprise is the managed plane for zero-knowledge identity verification. You configure flows in a dashboard, call a single SDK, and receive signed webhook events when users verify. We handle credential issuance, proof verification, decentralized storage, and the audit trail.
+[Self Enterprise](https://dashboard.self.xyz) is the managed plane for zero-knowledge identity verification. You configure flows in a dashboard, call a single SDK, and receive signed webhook events when users verify. We handle credential issuance, proof verification, decentralized storage, and the audit trail.
 
 The integration is small: one `sessions.create(...)` call, a hosted page the user opens, and a webhook on your backend.
 
