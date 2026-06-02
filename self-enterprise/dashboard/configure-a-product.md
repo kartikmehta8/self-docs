@@ -1,65 +1,51 @@
 # Configure a product
 
-A flow always starts by choosing one of the three products. The product decides which rules you can set. You then configure the flow in the **Configure** tab of the product editor.
+A configuration always starts by choosing one of the three products. The product decides which rules you can set. You then build it in the **Configure** tab.
 
-> 📸 _**Screenshot placeholder:** the "New configuration" screen showing the three products (Pre KYC, Age Verification, Proof of Human)._
+![New Proof of Human configuration](../../.gitbook/assets/new-proof-of-human.png)
 
 ## Pick a product
 
-| Product | What the user proves | Configurable rules | Outcome |
-| --- | --- | --- | --- |
-| **Pre KYC** | Holds a genuine document, optionally meets an age floor, comes from an allowed country, clears OFAC | Minimum age, country allow or deny lists, OFAC | approved / rejected |
-| **Age Verification** | Meets an age threshold | Minimum age (and optional maximum age) | approved / rejected |
-| **Proof of Human** | Is a unique, real human | None (uniqueness is intrinsic) | verified / failed |
-
-> Per-document disclosures (revealing a specific field like an exact date or document number) are not part of these products. Each one returns a pass or fail result plus the predicate outcomes you configured, never raw personal data.
-
-## Rules
-
-Rules are the predicates the user's proof must satisfy. The user proves each one without revealing the underlying value. Which rules are available depends on the product you picked:
-
-| Rule | What it checks | Available in |
+| Product | What the user proves | Configurable rules |
 | --- | --- | --- |
-| **Minimum age** | User is at least N years old. Never reveals the date of birth. | Pre KYC, Age Verification |
-| **Maximum age** | User is at most N years old (combine with minimum for a band). | Age Verification |
-| **Country rules** | Issuing country is on your allow list, or not on your deny list. ISO 3166-1 alpha-3 codes. | Pre KYC |
-| **OFAC** | User does not match the OFAC sanctions list. Self keeps the list updated daily. | Pre KYC |
+| **Pre KYC** | Holds a genuine document, optionally meets an age floor, comes from an allowed country, clears OFAC | Minimum age, excluded countries, OFAC |
+| **Age Verification** | Meets an age threshold | Minimum age |
+| **Proof of Human** | Is a unique, real human | None (uniqueness is intrinsic) |
 
-Proof of Human has no configurable rules: uniqueness comes from the document itself, so you just deploy it.
+## The Configure tab
 
-> 📸 _**Screenshot placeholder:** the Rules editor for a Pre KYC flow with a minimum age, a country deny list, and OFAC enabled._
+The Configure tab has three cards on the left. On the right, a live **proof-request preview** shows what the user will see, and a **credit estimate** shows what each verification will cost.
 
-The dashboard validates the combination before you can publish. For example, you cannot set both an allow list and a deny list for countries on the same flow.
+### Configuration details
 
-## Documents
+* **Configuration name**: a label for this config.
+* **Application icon**: the icon shown on the proof request. Managed under **Settings → General**.
 
-Which credential types you accept. The dashboard shows everything supported and you tick the ones you want.
+### Disclosure rules
 
-* **Biometric passport**: chip-equipped ICAO 9303 e-passports. Highest assurance.
-* **Aadhaar**: India's national ID. See the [document spec](../reference/document-specifications/aadhaar.md).
-* **KYC attestation**: a partner-issued KYC credential. See the [KYC spec](../reference/document-specifications/kyc.md).
+The predicates the user must satisfy. The user proves each one without revealing the underlying value.
 
-> **Coverage:** different documents cover different countries. See [Supported countries](../reference/supported-countries.md).
+* **Security level**: **Standard** verifies the document is genuine; **Biometric** also verifies the user physically scanned the document's chip.
+* **Minimum age** (Pre KYC, Age Verification): the age threshold. Only the pass or fail result is disclosed, never the date of birth.
+* **Excluded countries** (Pre KYC): documents issued by a country on this list fail. Only the pass or fail result is disclosed, not the user's country. ISO 3166-1 alpha-3 codes.
+* **OFAC check** (Pre KYC): match against the US Treasury OFAC sanctions list. Self keeps the list updated daily, and only the pass or fail result is disclosed.
 
-## Settings
+### Additional data
 
-Per-flow operational settings:
+Beyond the pass or fail rules, you can ask the user to disclose specific document fields. Each is an explicit reveal, **off by default**, request only what you need:
 
-* **Success URL**: where the user goes after a successful verification.
-* **Failure URL**: where the user goes if the verification fails (wrong document, a rule not met, expired).
-* **Display name**: what the user sees on the hosted page (for example "Acme Marketplace").
-* **Branding**: logo and accent color for the hosted page.
+`Full name`, `ID number`, `Date issued`, `Date of birth`, `Gender`, `Nationality`, `Expiration date`, `Issuing state`.
 
-These are read at session creation time. You can override `successUrl` and `failureUrl` per session through the API when the destination varies (for example deep links).
+![Published Pre-KYC configuration](../../.gitbook/assets/published-kyc-product.png)
 
-## Draft vs. published
+## Save and publish
 
-Editing the Configure tab updates a **draft**. The draft is not live until you open the [Deploy](publish-a-flow-version.md) tab and publish it.
+Saving stores your changes. To take the configuration live, publish it from the [Deploy](publish-a-flow-version.md) tab, where it gets a `flowId` and you generate API keys. The dashboard validates the configuration before you can publish.
 
-In-flight sessions keep using the version they were created against, so publishing a new version never breaks an open session.
+A product keeps one active configuration at a time. In-flight sessions keep using the version they were created against, so publishing never breaks an open session.
 
 ## Related
 
-* [Anatomy of a flow](../flows/anatomy.md): the data model behind these tabs.
-* [Disclosures](../flows/disclosures.md): what each rule proves.
-* [Publish a flow version](publish-a-flow-version.md).
+* [Disclosures](../flows/disclosures.md): what each rule and reveal proves.
+* [Supported documents](../flows/supported-documents.md): which documents work where.
+* [Publish a flow version](publish-a-flow-version.md): deploy and generate keys.
