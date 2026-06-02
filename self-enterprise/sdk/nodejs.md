@@ -4,13 +4,25 @@
 
 ## Install
 
+{% tabs %}
+{% tab title="npm" %}
 ```bash
 npm install @selfxyz/enterprise-sdk
-# or
+```
+{% endtab %}
+
+{% tab title="pnpm" %}
+```bash
 pnpm add @selfxyz/enterprise-sdk
-# or
+```
+{% endtab %}
+
+{% tab title="yarn" %}
+```bash
 yarn add @selfxyz/enterprise-sdk
 ```
+{% endtab %}
+{% endtabs %}
 
 Node 18+. ESM-only.
 
@@ -69,7 +81,27 @@ detail.proofAttributes;    // disclosed predicates, e.g. { age_gte_18: true }
 detail.storage.state;      // 'pending' | 'committed' | 'failed'
 ```
 
-Returns `SessionDetail` (alias of `SessionDetailResponse`).
+Returns `SessionDetail` (exported from the SDK, an alias of `SessionDetailResponse`):
+
+```ts
+interface SessionDetail {
+  id: string;
+  status: 'pending' | 'valid' | 'invalid' | 'error' | 'expired';
+  createdAt: string;                                  // ISO-8601
+  completedAt: string | null;                         // ISO-8601, null until terminal
+  expiresAt: string;                                  // ISO-8601
+  flowVersionId: string;                              // the pinned flow version
+  externalUuid: string;                               // your identifier from create()
+  metadata: Record<string, unknown> | null;           // what you passed to create()
+  predicatesConfig: Record<string, unknown> | null;   // the rules this ran against
+  proofAttributes: Record<string, unknown> | null;    // disclosed results (null until valid)
+  storage: {
+    state: 'pending' | 'committed' | 'failed';
+    uri: string | null;
+    credentialId: string | null;
+  };
+}
+```
 
 ## Types
 

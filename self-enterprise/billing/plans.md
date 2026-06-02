@@ -58,5 +58,4 @@ In **Settings → Billing → Change plan**:
 ## Related
 
 * [Credits and usage](credits-and-usage.md): how the per-verification cost is computed.
-* [Invoices](invoices.md).
 * [Dashboard: Billing](../dashboard/billing.md).

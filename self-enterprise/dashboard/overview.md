@@ -1,6 +1,6 @@
 # Dashboard overview
 
-The dashboard at [dashboard.self.xyz](https://dashboard.self.xyz) is where you configure products, manage keys, watch traffic, and pay for what you use. This page is a map.
+The [dashboard](https://dashboard.self.xyz) is where you configure products, manage keys, watch traffic, and pay for what you use. This page is a map.
 
 ![Dashboard home](../../.gitbook/assets/dashboard-home.png)
 
@@ -29,7 +29,7 @@ Where a product's previous configurations go once you replace them. Archived con
 Org-wide configuration, organized into tabs:
 
 * [**General**](#general): organization name, your profile, theme, and deactivation.
-* [**Usage & Billing**](billing.md): plan, credit balance, usage, and invoices.
+* [**Usage & Billing**](billing.md): plan, credit balance, and usage.
 * [**Webhooks**](webhooks.md): endpoints, and signing secrets.
 * **Audit**: an exportable record of changes.
 * [**People**](people.md): members and invites.

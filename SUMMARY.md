@@ -44,7 +44,6 @@
 
 * [Plans](self-enterprise/billing/plans.md)
 * [Credits and usage](self-enterprise/billing/credits-and-usage.md)
-* [Invoices](self-enterprise/billing/invoices.md)
 
 ## Migrate
 

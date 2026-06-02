@@ -32,7 +32,7 @@ If you're happy running your own verifier and don't need SLAs, billing, or a das
 | `ConfigStore` (your `IConfigStorage` impl) | Replaced by the dashboard's [flow configuration](../dashboard/configure-a-product.md). |
 | Predicate config object | A **flow** in the dashboard. `flowId` replaces inline config. |
 | Per-app verifier secrets | A Bearer API key (`sk_live_…`). |
-| Custom webhook code | A webhook subscription, verified via `SelfWebhooks.verify(...)`. |
+| Custom webhook code | A webhook endpoint you register, verified via `SelfWebhooks.verify(...)`. |
 
 ## Step-by-step
 
@@ -101,7 +101,7 @@ app.post('/start-verification', async (req, res) => {
 
 Today your `/verify` endpoint runs the Groth16 verifier and acts on the result inline.
 
-With Enterprise, subscribe to `verification.completed` in the dashboard and handle it:
+With Enterprise, register a webhook endpoint in the dashboard (it receives all events) and handle `verification.completed`:
 
 ```ts
 import { SelfWebhooks } from '@selfxyz/enterprise-sdk';
@@ -142,7 +142,7 @@ If you'd rather keep rendering inline: call `self.sessions.create(...)` on your 
 
 * No verifier infrastructure to run.
 * [Audit log](../dashboard/activity-log.md) out of the box.
-* [Webhook delivery](../webhooks/overview.md) with retries and replay.
+* [Webhook delivery](../webhooks/overview.md) with automatic retries.
 * A [dashboard](../dashboard/overview.md) to change rules without a redeploy.
 * [Per-flow versioning](../flows/anatomy.md#versions), audit exactly what a user was verified against last March.
 
@@ -154,7 +154,7 @@ If you'd rather keep rendering inline: call `self.sessions.create(...)` on your 
 ## Rolling out safely
 
 1. Build the Enterprise integration behind a feature flag (`enterprise: false`).
-2. Configure a **test**-environment flow + webhook subscription.
+2. Configure a **test**-environment flow + webhook endpoint.
 3. QA against [mock passports](../guides/using-mock-passports.md).
 4. Move staging to Enterprise.
 5. Cut over prod with a percentage rollout (10% → 50% → 100%).

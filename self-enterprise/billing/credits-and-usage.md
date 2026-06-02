@@ -89,5 +89,4 @@ The **Credits consumed** chart shows daily burn. If you see a spike, drill into 
 ## Related
 
 * [Plans](plans.md).
-* [Invoices](invoices.md).
 * [Dashboard: Billing](../dashboard/billing.md).

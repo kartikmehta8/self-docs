@@ -27,4 +27,3 @@ When your credit balance runs low you'll see a warning on this tab. To add capac
 
 * [Plans](../billing/plans.md): what each tier includes.
 * [Credits and usage](../billing/credits-and-usage.md): how the per-verification cost works.
-* [Invoices](../billing/invoices.md): billing periods and charges (managed in the Stripe portal).

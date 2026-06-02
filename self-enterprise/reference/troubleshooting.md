@@ -4,9 +4,9 @@ icon: life-ring
 
 # Troubleshooting
 
-Things that commonly go wrong, and how to unstick them.
+Things that commonly go wrong, and how to unstick them. Errors from the SDK arrive as `SelfApiError` (`err.statusCode`, `err.code`); the sections below are keyed by those.
 
-If none of these apply, email support@self.xyz with the request ID (`X-Request-Id` header on API responses, `svix-id` on webhook deliveries).
+If none of these apply, email support@self.xyz with your org ID (from the dashboard URL) and, for a webhook issue, the `svix-id` header from the delivery.
 
 ## Authentication
 
@@ -14,10 +14,9 @@ If none of these apply, email support@self.xyz with the request ID (`X-Request-I
 
 The API key is missing, malformed, or revoked.
 
-* Check the `Authorization: Bearer ...` header is present.
-* Confirm the key starts with `sk_test_` or `sk_live_`.
-* In the dashboard, check the key's **Last used at**. If it's never been used, you may be reading from the wrong env var. If it's been used recently, it may have been revoked.
-* The full key is shown once on creation. If you've lost it, create a new key and revoke the old one.
+* Confirm the `apiKey` you pass to `SelfClient` is set and is the full value (it starts with `sk_test_` or `sk_live_`).
+* If it works locally but 401s in deploy, you're probably reading the wrong env var. If it worked before and suddenly 401s, the key was likely revoked.
+* The full key is shown once on creation. If you've lost it, generate a new one on the Deploy tab and revoke the old one.
 
 ### `403 forbidden`
 
@@ -58,9 +57,9 @@ The `flowId` (or session ID) is wrong, points at a draft (not yet published), or
 
 Your org's credit balance is too low to cover this session's cost, and your [credit gate](../billing/credits-and-usage.md#insufficient-credits) is set to `hard`. (The error envelope carries `code: "unauthenticated"` with HTTP `402`, branch on the status, not the code.)
 
-* Check **Settings → Billing → Credit balance**.
-* If you're on Free, the monthly grant resets at the start of the cycle. If you're on Starter/Enterprise, configure overage, or switch the credit gate to `soft`.
-* Set a **low-balance notification** so this doesn't surprise you again.
+* Check your balance on the **Settings → Usage & Billing** tab.
+* On Free, the grant resets at the start of each cycle. On Starter, upgrade your plan (or talk to sales about Enterprise) for more capacity.
+* Watch the credits meter on that tab so this doesn't surprise you.
 
 ### `429 rate_limited`
 
@@ -68,7 +67,7 @@ Per-API-key rate limit exceeded. Honor the `Retry-After` header.
 
 * If your traffic legitimately exceeds the limit, contact sales@self.xyz about higher limits or move to Enterprise.
 * If a single key is doing all the work, split traffic across multiple keys, limits are per-key.
-* The SDK retries 429s automatically; if you're getting them, you've exhausted SDK retries too.
+* The SDK doesn't retry, your code should back off and retry on `429`.
 
 ### `5xx` errors
 
@@ -78,11 +77,10 @@ Transient. Retry with exponential backoff. If it's persistent (more than 30 seco
 
 ### Webhook handler never receives events
 
-* In the dashboard, check **Settings → Webhooks → [endpoint] → Delivery history**. Are deliveries being attempted?
-  * If **no attempts**: your endpoint isn't subscribed to the event type you're expecting. Check the subscription list.
-  * If **attempts but failing**: see below.
+* Confirm the endpoint is registered under **Settings → Webhooks** for the **same environment** as the key creating sessions (test vs live).
 * Confirm your endpoint is reachable from the public internet (not behind a VPN, no firewall blocking POST).
 * If using a tunnel (ngrok, Cloudflare Tunnel), confirm the tunnel is still up.
+* Every endpoint receives all event types, so make sure your handler branches on the `event.type` you expect rather than assuming only one arrives.
 
 ### Webhook deliveries fail with `400`
 
@@ -96,7 +94,7 @@ Your handler is rejecting the delivery. Most likely:
 
 ### Webhook deliveries fail with `5xx`
 
-Your handler is erroring before completing. Check your logs for the handler invocation matching the `svix-id` in the failed delivery row.
+Your handler is erroring before completing. Find the matching invocation in your logs by the `svix-id` header. Self retries `5xx`, so once you fix the handler the next retry should land.
 
 ### Duplicate events
 
@@ -133,27 +131,17 @@ if (event.type === 'verification.completed') {
 
 ## Mock passports
 
-For testing in `sk_test_` environments, the Self app's "Test mode" issues mock passports you can use to drive every code path.
-
-To enable in the Self app:
-
-1. Open the Self app on your test device.
-2. Settings → Developer mode → enable.
-3. A new "Test mode" toggle appears on the home screen.
-4. While Test mode is on, the app generates mock credentials when prompted by a test-env verification URL.
-
-Mock credentials only work against test flows. They are cryptographically distinct from real credentials and will never verify against a live flow.
+In a **test** environment (sessions created with an `sk_test_` key) you verify with a mock passport from the Self app instead of a real document. See [Using mock passports](../guides/using-mock-passports.md) for the setup. Mock credentials are cryptographically distinct from real ones and never verify against a live flow.
 
 ## When all else fails
 
 Email support@self.xyz with:
 
-* The relevant request ID (`X-Request-Id` from the API response, or `svix-id` from a webhook delivery).
-* Your org ID (visible in the dashboard URL).
-* What you expected vs. what happened.
-* Approximate timestamps.
+* Your Email.
+* The `err.code` and `err.message` from the `SelfApiError`, or the `svix-id` header for a webhook issue.
+* What you expected vs. what happened, with approximate timestamps.
 
-We can find a request by ID in seconds; without one, the investigation is much slower.
+The more of that you include, the faster we can trace it.
 
 ## Related
 
