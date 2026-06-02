@@ -16,22 +16,18 @@ After sign-up you'll be prompted to create an organization. An org owns flows, A
 
 ![Self Dashboard](../../.gitbook/assets/self-dashboard.png)
 
-The dashboard home shows a card for each of the three products. Pick the one you want to verify:
+The dashboard home shows a card for each of the three products. Every product lets you set a **Security level** (Standard or Biometric) and toggle an **OFAC** check; they differ in the age and country rules:
 
-* **Pre KYC**: document plus optional age, country rules, and OFAC.
-* **Age Verification**: an age threshold (for example 18 or 21).
-* **Proof of Human**: unique humanity for sybil resistance, no extra rules.
+* **Pre KYC**: minimum age and country rules.
+* **Age Verification**: a minimum age (for example 18 or 21).
+* **Proof of Human**: no age or country rules, just unique humanity.
 
-Open a product and click **New config** to create a configuration. For this walkthrough, **Age Verification** is the quickest. A configuration has three parts:
+Open a product and click **New config**. For this walkthrough, **Age Verification** is the quickest: set a **minimum age** and publish. (The Configure tab also has **Additional data** reveals and a name/icon under **Configuration details**, see [Configure a product](../dashboard/configure-a-product.md).)
 
-* **Rules**: what the user must prove. For Age Verification, a minimum age.
-* **Documents**: which credentials are acceptable (passport, Aadhaar, KYC attestation).
-* **Settings**: success and failure redirect URLs, display name, branding.
-
-Fill them in, then publish. Your configuration now has a published `flowId`. Copy it.
+Once published, your configuration has a `flowId`. Copy it.
 
 {% hint style="info" %}
-**One active config at a time.** A product keeps a single active configuration. To create a new one, archive the current config under **Settings** first.
+**One active config at a time.** A product keeps a single active configuration, and a published config can't be edited. To change it, archive it and create a new one.
 {% endhint %}
 
 > **Test vs. live:** a configuration published in your test environment only accepts mock passports and never bills credits. See [Test vs. live](../flows/test-vs-live.md).
