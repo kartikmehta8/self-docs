@@ -14,7 +14,7 @@ The landing surface. Shows recent activity across your products, quick links to 
 
 Each product (Pre KYC, Age Verification, Proof of Human) has its own page and holds **one active configuration at a time**. The page splits into tabs:
 
-* [Configure](configure-a-product.md): rules, documents, settings.
+* [Configure](configure-a-product.md): disclosure rules and (for Pre KYC) additional data.
 * **Deploy**: publish the configuration and generate [API keys](api-keys.md).
 * [Activity log](activity-log.md): verifications, errors over time.
 

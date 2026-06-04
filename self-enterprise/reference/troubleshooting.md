@@ -104,7 +104,7 @@ Expected. We deliver at-least-once. See [Best practices](../webhooks/best-practi
 
 ### `Cannot find module '@selfxyz/enterprise-sdk'`
 
-The package is ESM-only and requires Node 18+.
+The package is ESM-only and requires Node 20+.
 
 * Confirm Node version (`node -v`).
 * Confirm your `package.json` has `"type": "module"`, or you're using `.mjs` files, or your build system supports ESM.

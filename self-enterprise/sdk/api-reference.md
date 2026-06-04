@@ -13,6 +13,7 @@ import {
   SelfClient,               // the API client
   SelfWebhooks,             // webhook signature verification
   SelfApiError,             // thrown on a non-2xx API response
+  SelfValidationError,      // thrown on invalid input / unknown payload
   WebhookVerificationError, // thrown on a bad webhook signature
 } from '@selfxyz/enterprise-sdk';
 
@@ -52,7 +53,7 @@ Creates a verification session against the published flow and returns a URL to s
 | Field | Type | Required | Notes |
 | --- | --- | :---: | --- |
 | `flowId` | string (UUID) | ✅ | The flow to verify against. |
-| `externalUuid` | string | ✅ | Your stable identifier for the user. 1 to 128 chars. |
+| `externalUuid` | string (UUID) | ✅ | Your stable identifier for the user. Must be a UUID. |
 | `expiresInSeconds` | number | No | How long the session stays openable. Integer, 60 to 86400. Default 3600. |
 | `metadata` | object | No | Arbitrary JSON attached to the session. Max 4 KB serialized. |
 | `successUrl` | string (URL) | No | Where the hosted page sends the user on success. |
@@ -122,7 +123,7 @@ Verifies a webhook signature and returns the typed, parsed event.
 | `headers` | Must include `svix-id`, `svix-timestamp`, `svix-signature`. |
 | `secret` | The endpoint's signing secret (`whsec_…`). |
 
-Throws [`WebhookVerificationError`](#webhookverificationerror) if the signature is invalid or the timestamp is stale, and a Zod `ZodError` if the body doesn't match any known event shape (usually an out-of-date SDK).
+Throws [`WebhookVerificationError`](#webhookverificationerror) if the signature is invalid or the timestamp is stale, and [`SelfValidationError`](#selfvalidationerror) if the body doesn't match any known event shape (usually an out-of-date SDK).
 
 **`WebhookEvent`** is a discriminated union on `type`:
 
@@ -149,8 +150,18 @@ Thrown when the API returns a non-2xx response.
 | `code` | string | Stable machine-readable code (`validation_failed`, `not_found`, ...). |
 | `message` | string | Human-readable. |
 | `details` | `Record<string, unknown>` \| undefined | Extra context (for example validation `issues`). |
+| `requestId` | string \| undefined | The `X-Request-Id` response header, when present. Quote it to support. |
 
 See [Error handling](error-handling.md) for the code catalog.
+
+### `SelfValidationError`
+
+Thrown when arguments fail schema validation **before** a request is sent (for example a `flowId` or `externalUuid` that isn't a UUID), and by `SelfWebhooks.verify(...)` when a verified payload doesn't match any known event shape.
+
+| Property | Type | Notes |
+| --- | --- | --- |
+| `issues` | `ZodIssue[]` | Which fields failed and why. |
+| `message` | string | Human-readable summary. |
 
 ### `WebhookVerificationError`
 

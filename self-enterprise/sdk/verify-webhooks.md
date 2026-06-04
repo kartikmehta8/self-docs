@@ -46,7 +46,7 @@ app.post(
       if (err instanceof WebhookVerificationError) {
         res.status(400).end();
       } else {
-        // Schema mismatch (ZodError) or server bug, log and 5xx so we retry.
+        // Unknown payload shape (SelfValidationError) or server bug, log and 5xx so we retry.
         res.status(500).end();
       }
     }

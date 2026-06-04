@@ -24,7 +24,7 @@ yarn add @selfxyz/enterprise-sdk
 {% endtab %}
 {% endtabs %}
 
-Node 18+. ESM-only.
+Node 20+. ESM-only.
 
 ## Initialize
 
@@ -47,12 +47,12 @@ Get the `flowId` by publishing a configuration in the dashboard, it's shown on t
 ```ts
 const session = await self.sessions.create({
   flowId: '9c0b4f1c-1d6c-4f1b-a8c4-9f0fa0a8d9e2',
-  externalUuid: 'user_42',
+  externalUuid: 'a1b2c3d4-5678-4e9a-b012-3456789abcde',  // a UUID, your stable id for the user
   // optional:
   expiresInSeconds: 3600,
   metadata: { campaign: 'winter-2026' },
-  successUrl: 'https://app.example.com/verified?u=42',
-  failureUrl: 'https://app.example.com/failed?u=42',
+  successUrl: 'https://app.example.com/verified',
+  failureUrl: 'https://app.example.com/failed',
 });
 
 session.verificationUrl;  // give to the user
@@ -144,11 +144,12 @@ try {
     err.code;          // 'validation_failed' | 'unauthenticated' | 'not_found' | ...
     err.message;       // human-readable
     err.details;       // optional extra context (Record<string, unknown>)
+    err.requestId;     // X-Request-Id, quote it to support
   }
 }
 ```
 
-The SDK doesn't retry, handle transient `429` and `5xx` responses yourself (back off and retry). See [Error handling](error-handling.md) for the full code catalog.
+Bad arguments (for example a `flowId` or `externalUuid` that isn't a UUID) throw `SelfValidationError` before any request is sent. The SDK doesn't retry, handle transient `429` and `5xx` responses yourself (back off and retry). See [Error handling](error-handling.md) for the full code catalog.
 
 ## Compatibility
 

@@ -5,7 +5,7 @@ End-to-end: from sign-up to a verified user, in about ten minutes.
 ## Prerequisites
 
 * A Self.xyz dashboard account ([sign up](https://dashboard.self.xyz)).
-* Node 18+ (for the SDK).
+* Node 20+ (for the SDK).
 * A way to receive a webhook locally, [ngrok](https://ngrok.com), Cloudflare Tunnel, or any public HTTPS endpoint.
 
 ## 1. Create your organization
@@ -53,7 +53,7 @@ const self = new SelfClient({ apiKey: process.env.SELF_API_KEY! });
 
 const session = await self.sessions.create({
   flowId: '<paste flowId from step 2>',
-  externalUuid: 'user_42',           // your stable identifier for the user.
+  externalUuid: user.id,               // your stable UUID for this user.
 });
 
 console.log(session.verificationUrl);  // hand this to the user.

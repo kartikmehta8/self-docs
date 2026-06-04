@@ -1,6 +1,6 @@
 # SDK error handling
 
-The SDK throws two error classes. Catch them by type.
+The SDK throws three error classes. Catch them by type.
 
 ## `SelfApiError`
 
@@ -17,6 +17,7 @@ try {
     err.code;        // string ('validation_failed', 'not_found', 'unauthenticated', ...)
     err.message;     // string (human-readable)
     err.details;     // Record<string, unknown> | undefined
+    err.requestId;   // string | undefined (X-Request-Id; quote it to support)
   } else {
     throw err;       // network error, or something unexpected
   }
@@ -64,6 +65,25 @@ try {
 | `vendor_unavailable` | 503 | A dependency is temporarily unavailable. | Retry with backoff. |
 | `internal_error` | 500 | Server-side error. | Retry with backoff; if it persists, contact support. |
 
+## `SelfValidationError`
+
+Thrown when the arguments you pass fail schema validation, **before** any request goes out. The most common cause is a `flowId` or `externalUuid` that isn't a UUID. It also comes from `SelfWebhooks.verify(...)` when a verified payload doesn't match any known event shape.
+
+```ts
+import { SelfValidationError } from '@selfxyz/enterprise-sdk';
+
+try {
+  await self.sessions.create({ flowId, externalUuid });
+} catch (err) {
+  if (err instanceof SelfValidationError) {
+    err.issues;   // ZodIssue[], which fields are wrong
+    err.message;  // e.g. "Invalid sessions.create input: flowId (invalid uuid)"
+  }
+}
+```
+
+Fix the input; it's a programming error, not a transient one.
+
 ## `WebhookVerificationError`
 
 Thrown by `SelfWebhooks.verify(...)` when the signature doesn't match the body, the timestamp is too old, or required headers are missing.
@@ -80,7 +100,7 @@ try {
 }
 ```
 
-A separate failure mode: if the signature checks out but the body doesn't match any known event schema, `verify(...)` throws a Zod `ZodError`. That usually means the server is sending a newer event type than your SDK version knows, upgrade the SDK.
+A separate failure mode: if the signature checks out but the body doesn't match any known event schema, `verify(...)` throws `SelfValidationError`. That usually means the server is sending a newer event type than your SDK version knows, upgrade the SDK.
 
 ## Retries
 
@@ -95,6 +115,7 @@ log.error({
   msg: 'self_api_error',
   statusCode: err.statusCode,
   code: err.code,
+  requestId: err.requestId,
   details: err.details,
 });
 ```
