@@ -12,7 +12,7 @@ Webhooks are the canonical way to learn that a verification finished. Polling wo
 ```
 ┌──────────────┐   1. signed POST (event)     ┌──────────────────┐
 │     Self     │ ───────────────────────────▶ │  Your endpoint   │
-│ (dispatcher) │                              │  verify the sig, │
+│              │                              │  verify the sig, │
 │              │ ◀─────────────────────────── │  then return 2xx │
 └──────────────┘   2. ack (2xx)               └──────────────────┘
 

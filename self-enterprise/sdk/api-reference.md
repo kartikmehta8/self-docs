@@ -165,7 +165,7 @@ Thrown when arguments fail schema validation **before** a request is sent (for e
 
 ### `WebhookVerificationError`
 
-Re-exported from `svix`. Thrown by `SelfWebhooks.verify(...)` on a bad signature, stale timestamp, or missing headers. Respond `400`, a bad signature won't pass on retry.
+Thrown by `SelfWebhooks.verify(...)` on a bad signature, stale timestamp, or missing headers. Respond `400`, a bad signature won't pass on retry.
 
 ## Related
 
