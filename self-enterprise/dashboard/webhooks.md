@@ -26,13 +26,13 @@ Don't try to verify the signature yet, you don't have the signing secret until t
 
 ## Add an endpoint
 
-Click **Add endpoint** and fill in:
+Click **Add webhook** and fill in:
 
 * **Name**: a label for the endpoint.
 * **Webhook URL**: the public HTTPS URL from above.
 * **Environment**: `test` or `live` (defaults to test).
 
-When you save, Self sends the test event and waits for the result:
+When you click **Test and save**, Self sends the test event and waits for the result:
 
 * If your endpoint returns **`2xx`**, the endpoint is **saved** and the **signing secret** (`whsec_...`) is revealed **once**. This is the only time you'll see it, copy it into your secret manager as `SELF_WEBHOOK_SECRET`.
 * If it returns a non-`2xx` or doesn't respond in time, the endpoint is **not saved** ("webhook test failed"). Fix the endpoint and add it again.

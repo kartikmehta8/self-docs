@@ -36,7 +36,7 @@ const self = new SelfClient({
 });
 ```
 
-The API key is the only thing you pass. Whether the client talks to test or live is determined by the key prefix (`sk_test_` or `sk_live_`).
+The API key is the only option you need to pass. Whether the client talks to test or live is determined by the key prefix (`sk_test_` or `sk_live_`).
 
 ## Sessions
 
