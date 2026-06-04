@@ -60,7 +60,7 @@ If you integrate against the data model directly (for example via the dashboard'
 flows
 ├─ id
 ├─ orgId
-├─ product                   ← pre_kyc | age_verification | reusable_kyc
+├─ product                   ← pre_kyc | age_verification | proof_of_human
 ├─ name
 ├─ slug
 ├─ description
@@ -69,7 +69,7 @@ flows
 ```
 
 {% hint style="info" %}
-On the wire the three products carry the internal slugs `pre_kyc`, `age_verification`, and `reusable_kyc` (the dashboard labels `reusable_kyc` as Proof of Human). When creating sessions you reference a `flowId`, never the product slug.
+On the wire the three products carry the internal slugs `pre_kyc`, `age_verification`, and `proof_of_human` (what the verifier expects). When creating sessions you reference a `flowId`, never the product slug.
 {% endhint %}
 
 ## Related

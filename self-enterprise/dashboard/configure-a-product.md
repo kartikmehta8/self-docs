@@ -6,11 +6,13 @@ A configuration always starts by choosing one of the three products. The product
 
 ## Pick a product
 
-| Product | What the user proves | Configurable rules |
+| Product | What the user proves | Rules beyond Security level + OFAC |
 | --- | --- | --- |
-| **Pre KYC** | Holds a genuine document, optionally meets an age floor, comes from an allowed country, clears OFAC | Minimum age, excluded countries, OFAC |
+| **Pre KYC** | Holds a genuine document, optionally meets an age floor, comes from an allowed country, clears OFAC | Minimum age, excluded countries, plus Additional data reveals |
 | **Age Verification** | Meets an age threshold | Minimum age |
-| **Proof of Human** | Is a unique, real human | None (uniqueness is intrinsic) |
+| **Proof of Human** | Is a unique, real human | None extra |
+
+Every product also has a **Security level** and an **OFAC** check (covered below).
 
 ## The Configure tab
 
@@ -25,14 +27,14 @@ The Configure tab has three cards on the left. On the right, a live **proof-requ
 
 The predicates the user must satisfy. The user proves each one without revealing the underlying value.
 
-* **Security level**: **Standard** verifies the document is genuine; **Biometric** also verifies the user physically scanned the document's chip.
+* **Security level** (all products): **Standard** verifies the document is genuine; **Biometric** also verifies the user physically scanned the document's chip.
+* **OFAC check** (all products, on by default): match against the US Treasury OFAC sanctions list. Self keeps the list updated daily, and only the pass or fail result is disclosed.
 * **Minimum age** (Pre KYC, Age Verification): the age threshold. Only the pass or fail result is disclosed, never the date of birth.
 * **Excluded countries** (Pre KYC): documents issued by a country on this list fail. Only the pass or fail result is disclosed, not the user's country. ISO 3166-1 alpha-3 codes.
-* **OFAC check** (Pre KYC): match against the US Treasury OFAC sanctions list. Self keeps the list updated daily, and only the pass or fail result is disclosed.
 
-### Additional data
+### Additional data (Pre KYC)
 
-Beyond the pass or fail rules, you can ask the user to disclose specific document fields. Each is an explicit reveal, **off by default**, request only what you need:
+For **Pre KYC**, beyond the pass or fail rules, you can ask the user to disclose specific document fields. Each is an explicit reveal, **off by default**, request only what you need:
 
 `Full name`, `ID number`, `Date issued`, `Date of birth`, `Gender`, `Nationality`, `Expiration date`, `Issuing state`.
 

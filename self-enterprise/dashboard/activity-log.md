@@ -16,9 +16,11 @@ Each row shows:
 | --- | --- |
 | Document | The credential type used (passport, Aadhaar, KYC). |
 | Security level | The assurance level the configuration required (standard or biometric). |
-| Outcome | **Verified** (passed) or **rejected** (failed). |
 | Environment | `test` or `production`. |
 | Time | When the verification finished. |
+| ID | The verification's identifier. |
+
+The pass or fail outcome isn't a column; it's the **Passed** or **Failed** section the row sits in.
 
 ## What you won't see
 

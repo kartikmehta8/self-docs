@@ -12,7 +12,7 @@ Fires when off-chain verification finishes, either successfully or with a defini
 {
   "type": "verification.completed",
   "verification_id": "7f3b2a1e-9c4d-4b2a-8e1f-2c6d5a4b3c2d",
-  "external_uuid": "user_42",
+  "external_uuid": "a1b2c3d4-5678-4e9a-b012-3456789abcde",
   "flow_id": "9c0b4f1c-1d6c-4f1b-a8c4-9f0fa0a8d9e2",
   "flow_version_id": "b1e2c3d4-5678-4abc-9def-0123456789ab",
   "environment": "live",
@@ -67,12 +67,14 @@ Fires when the async decentralized-storage write for a verification succeeds.
 {
   "type": "verification.storage_committed",
   "verification_id": "7f3b2a1e-9c4d-4b2a-8e1f-2c6d5a4b3c2d",
-  "external_uuid": "user_42",
+  "external_uuid": "a1b2c3d4-5678-4e9a-b012-3456789abcde",
   "storage_uri": "ipfs://bafy...",
   "credential_id": "cred_01H...",
   "committed_at": "2026-05-29T17:33:25.110Z"
 }
 ```
+
+`storage_uri` may be `null`; the `credential_id` is always present on this event.
 
 ### When you'd care
 
@@ -97,7 +99,7 @@ Fires when the storage write permanently fails (after retries exhausted).
 {
   "type": "verification.storage_failed",
   "verification_id": "7f3b2a1e-9c4d-4b2a-8e1f-2c6d5a4b3c2d",
-  "external_uuid": "user_42",
+  "external_uuid": "a1b2c3d4-5678-4e9a-b012-3456789abcde",
   "error": "ipfs_pin_timeout",
   "failed_at": "2026-05-29T17:34:00.000Z"
 }

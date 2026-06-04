@@ -6,7 +6,7 @@
 
 ## Invite a teammate
 
-In the **Invite teammates** card, enter an email and click **Send invitation**. Self emails them a join link.
+In the **Invite teammates** card, enter an email, pick a **role** (`member` or `admin`; owners can also invite another `owner`), and click **Send invitation**. Self emails them a join link.
 
 * Anyone with an address on a **verified corporate domain** can accept the invitation.
 * A **consumer-domain** invite (for example a gmail.com address) is bound to the exact email you entered.
@@ -21,7 +21,7 @@ The **Team members** card lists everyone on the org and every outstanding invite
 | Status | **Active** (joined), **Invited** (pending), or **Expired**. |
 | Added | When they were invited or joined. |
 
-Pending and expired invitations have a **⋯** menu with **Resend** and **Revoke**.
+Pending and expired invitations have a **⋯** menu with **Resend** and **Revoke**. Active members can be **removed** from the org (owner/admin only). Removing a member or revoking their invite doesn't touch any API keys, those belong to the org, not the person.
 
 ## Roles
 

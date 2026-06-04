@@ -30,7 +30,7 @@ Available in **Pre KYC**. Deny issuing countries with an excluded list (ISO 3166
 
 ## OFAC (predicate)
 
-Available in **Pre KYC**. The user proves they don't match the OFAC sanctions list, which Self keeps updated daily. On a match, the verification is rejected.
+Available in **all products** (a toggle, on by default). The user proves they don't match the OFAC sanctions list, which Self keeps updated daily. On a match, the verification is rejected.
 
 ```json
 { "ofac_clear": true }
@@ -42,7 +42,7 @@ The core of the **Proof of Human** product, and present implicitly in the others
 
 ## Additional data (reveals)
 
-Beyond the pass or fail predicates, you can ask the user to disclose specific document fields. Each is **off by default**, so request only what you need:
+Available in **Pre KYC**. Beyond the pass or fail predicates, you can ask the user to disclose specific document fields. Each is **off by default**, so request only what you need:
 
 `Full name`, `ID number`, `Date issued`, `Date of birth`, `Gender`, `Nationality`, `Expiration date`, `Issuing state`.
 

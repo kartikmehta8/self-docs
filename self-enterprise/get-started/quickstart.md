@@ -5,7 +5,7 @@ End-to-end: from sign-up to a verified user, in about ten minutes.
 ## Prerequisites
 
 * A Self.xyz dashboard account ([sign up](https://dashboard.self.xyz)).
-* Node 18+ (for the SDK).
+* Node 20+ (for the SDK).
 * A way to receive a webhook locally, [ngrok](https://ngrok.com), Cloudflare Tunnel, or any public HTTPS endpoint.
 
 ## 1. Create your organization
@@ -34,7 +34,7 @@ Once published, your configuration has a `flowId`. Copy it.
 
 ## 3. Create an API key
 
-**Settings → API keys → Create key**. Choose `test` while you're integrating. The key (`sk_test_...`) is shown once, store it as `SELF_API_KEY` in your backend's secret manager.
+On the product's **Deploy** tab, open the **Secret API Keys (server-side)** card, keep the environment on `test`, and click **Generate test API key**. The key (`sk_test_...`) is shown once, store it as `SELF_API_KEY` in your backend's secret manager. See [API keys](../dashboard/api-keys.md).
 
 ![Test API key](../../.gitbook/assets/api-key-test.png)
 
@@ -53,7 +53,7 @@ const self = new SelfClient({ apiKey: process.env.SELF_API_KEY! });
 
 const session = await self.sessions.create({
   flowId: '<paste flowId from step 2>',
-  externalUuid: 'user_42',           // your stable identifier for the user.
+  externalUuid: user.id,               // your stable UUID for this user.
 });
 
 console.log(session.verificationUrl);  // hand this to the user.
@@ -61,11 +61,11 @@ console.log(session.verificationUrl);  // hand this to the user.
 
 The user opens `verificationUrl` in their Self app, produces a proof, and the app submits it back to us.
 
-## 6. Subscribe to webhooks
+## 6. Add a webhook endpoint
 
-**Settings → Webhooks → Add endpoint**. Paste your public URL (e.g. `https://<your-tunnel>/webhooks/self`) and subscribe to `verification.completed`.
+Your endpoint has to be **running and reachable first**: when you add it, Self sends a test event and only saves it (and reveals the secret) if your endpoint returns `2xx`. Deploy the step 7 handler below (or a bare `200` stub) on a public HTTPS URL before this step. See [Webhooks: stand up an endpoint first](../dashboard/webhooks.md) for the full detail.
 
-The dashboard returns a signing secret (`whsec_...`). Store it as `SELF_WEBHOOK_SECRET`.
+Then in **Settings → Webhooks → Add webhook**, paste your URL (e.g. `https://<your-tunnel>/webhooks/self`). On success the dashboard reveals a signing secret (`whsec_...`) **once**, store it as `SELF_WEBHOOK_SECRET`. Every endpoint receives all event types.
 
 ## 7. Verify webhook deliveries
 

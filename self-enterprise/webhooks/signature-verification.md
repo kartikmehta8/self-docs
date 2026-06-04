@@ -23,7 +23,7 @@ See [SDK: Verify webhooks](../sdk/verify-webhooks.md) for the full setup includi
 
 ## Other languages
 
-The Node SDK is the official client today. From any other language, verify manually with HMAC-SHA256 (see below). The headers and scheme are standard, so a Svix-compatible verification library works too.
+The Node SDK is the official client today. From any other language, verify manually with HMAC-SHA256 (see below). The scheme is standard, so an off-the-shelf webhook-signature library that follows it works too.
 
 ## Manual verification
 

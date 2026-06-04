@@ -8,7 +8,7 @@ You need:
 
 * The **raw** request body (string or Buffer). Not the JSON-parsed object, signature verification operates on the byte string.
 * The request headers, at minimum `svix-id`, `svix-timestamp`, `svix-signature`.
-* The signing secret (`whsec_...`) for the webhook endpoint, from the dashboard.
+* The signing secret (`whsec_...`) for the webhook endpoint. You get it when you [add the endpoint](../dashboard/webhooks.md) (revealed once); note the endpoint must return `2xx` to be saved.
 
 ## Express
 
@@ -46,7 +46,7 @@ app.post(
       if (err instanceof WebhookVerificationError) {
         res.status(400).end();
       } else {
-        // Schema mismatch (ZodError) or server bug, log and 5xx so we retry.
+        // Unknown payload shape (SelfValidationError) or server bug, log and 5xx so we retry.
         res.status(500).end();
       }
     }
