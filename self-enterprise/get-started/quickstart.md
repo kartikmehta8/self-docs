@@ -61,11 +61,11 @@ console.log(session.verificationUrl);  // hand this to the user.
 
 The user opens `verificationUrl` in their Self app, produces a proof, and the app submits it back to us.
 
-## 6. Subscribe to webhooks
+## 6. Add a webhook endpoint
 
-**Settings → Webhooks → Add endpoint**. Paste your public URL (e.g. `https://<your-tunnel>/webhooks/self`) and subscribe to `verification.completed`.
+Your endpoint has to be **running and reachable first**: when you add it, Self sends a test event and only saves it (and reveals the secret) if your endpoint returns `2xx`. Deploy the step 7 handler below (or a bare `200` stub) on a public HTTPS URL before this step. See [Webhooks: stand up an endpoint first](../dashboard/webhooks.md) for the full detail.
 
-The dashboard returns a signing secret (`whsec_...`). Store it as `SELF_WEBHOOK_SECRET`.
+Then in **Settings → Webhooks → Add endpoint**, paste your URL (e.g. `https://<your-tunnel>/webhooks/self`). On success the dashboard reveals a signing secret (`whsec_...`) **once**, store it as `SELF_WEBHOOK_SECRET`. Every endpoint receives all event types.
 
 ## 7. Verify webhook deliveries
 
